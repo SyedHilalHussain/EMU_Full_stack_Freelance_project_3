@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Purple Admin</title>
+  
+  <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
+
+  <!-- Plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <!-- endinject -->
+  <!-- Layout styles -->
+  <!-- <link rel="stylesheet" href="./assets/css/style2.css"> -->
+  <!-- End layout styles -->
+ <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4f7ff;
+  overflow: hidden;
+}
+
+.toast1 {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  border-radius: 12px;
+  background: #fff;
+  padding: 20px 35px 20px 25px;
+  box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transform: translateX(calc(100% + 30px));
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+}
+
+.toast1.active {
+  transform: translateX(0%);
+}
+
+.toast1 .toast1-content {
+  display: flex;
+  align-items: center;
+}
+
+.toast1-content .check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  min-width: 35px;
+  /* background-color: #4070f4; */
+  color: #fff;
+  font-size: 20px;
+  border-radius: 50%;
+}
+
+.toast1-content .message1 {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+}
+
+.message1 .text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #666666;
+}
+
+.message1 .text.text-1 {
+  font-weight: 600;
+  color: #333;
+}
+
+.toast1 .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  padding: 5px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.toast1 .close:hover {
+  opacity: 1;
+}
+
+.toast1 .progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+
+}
+
+.toast1 .progress:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #4070f4;
+}
+
+.progress.active:before {
+  animation: progress 5s linear forwards;
+}
+
+@keyframes progress {
+  100% {
+    right: 100%;
+  }
+}
+
+.pop-button {
+  padding: 12px 20px;
+  font-size: 20px;
+  outline: none;
+  border: none;
+  background-color: #4070f4;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.pop-button:hover {
+  background-color: #0e4bf1;
+}
+
+.toast1.active ~ button {
+  pointer-events: none;
+}
+
+ </style>
+</head>
+
+<body>
+
+
+
+
+  <!-- Remove 'active' class, this is just to show in Codepen thumbnail -->
+  <div 
+  style="
+  
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: #f4f7ff;
+overflow: hidden;"
+  
+  >
+
+  
+<div class="toast1 active">
+  
+    <div class="toast1-content">
+      <i class="mdi mdi-check check bg-gradient-success"></i>
+  
+      <div class="message1">
+        <span class="text text-1">Succes</span>
+        <span class="text text-2"> changes has been saved</span>
+      </div>
+    </div>
+    <i class="mdi mdi-close close"></i>
+  
+    <!-- Remove 'active' class, this is just to show in Codepen thumbnail -->
+    <div class="progress bg-gradient-success-dark"></div>
+  </div>
+  
+  <button class="pop-button" onclick="ShowAlertBox()">Show toast1</button>
+  
+  <small style="position: absolute; bottom: 40px">Remove 'active' classes, this is just to show in Codepen thumbnail</small>
+
+
+
+
+
+
+
+    
+    </div>
+   
+<script>
+    const button = document.querySelector("button"),
+  toast1 = document.querySelector(".toast1");
+(closeIcon = document.querySelector(".close")),
+  (progress = document.querySelector(".progress"));
+
+let timer1, timer2;
+
+function ShowAlertBox() {
+  
+  toast1.style.display = 'block';
+//   checkItom.classList.add("bg-gradient-warning") ;
+  progress.classList.add("active");
+
+  timer1 = setTimeout(function() {
+    toast1.classList.add('active');
+  }, 50);
+
+  timer1 = setTimeout(() => {
+    toast1.classList.remove("active");
+  }, 5000); //1s = 1000 milliseconds
+
+ 
+
+  timer2 = setTimeout(() => {
+    toast1.style.display = 'none';
+    progress.classList.remove("active");
+  }, 5300);
+}
+closeIcon.addEventListener("click", () => {
+  toast1.classList.remove("active");
+
+  setTimeout(() => {
+    progress.classList.remove("active");
+  }, 300);
+
+  clearTimeout(timer1);
+  clearTimeout(timer2);
+});
+
+</script>
+  <!-- End custom js for this page -->
+</body>
+
+</html>
