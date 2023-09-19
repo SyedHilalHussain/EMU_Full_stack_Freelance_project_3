@@ -6,6 +6,7 @@ include '../superadmin/config.php';
 $user_id = $_SESSION['id'];
 $usertype = $_SESSION['user_type'];
 $username = $_SESSION['name'];
+$current_year =date('Y');
 if (isset($user_id)) {
   $query = mysqli_query($conn, "SELECT * FROM tbl_user WHERE id = $user_id");
   $fquery = mysqli_fetch_assoc($query);
@@ -62,7 +63,7 @@ if (isset($_SESSION['id'])) {
           <div class="dropdown-divider"></div>
           ';
      if(isset($_SESSION['user_type']) && $_SESSION['user_type']=='Student'){
-      echo'<a class="dropdown-item" href="../student/edit_member.php?student_log_id=' . $user_id . '">
+      echo'<a class="dropdown-item" href="../student/edit_member.php?student_id=' . $user_id . '">
       <i class="mdi mdi-cached me-2 text-success"></i>Student Profile</a>
     <div class="dropdown-divider"></div>
     ';
@@ -262,6 +263,8 @@ if ($usertype == 'SuperUser') {
       </div>
     </li>';
 } elseif ($usertype == 'Mentor') {
+
+  if($fquery['Year']==$current_year){
   echo '
       <li class="nav-item">
         <a class="nav-link" href="./../mentor/home.php">
@@ -328,7 +331,14 @@ if ($usertype == 'SuperUser') {
           <span class="menu-title">Student</span>
           <i class="mdi mdi-account menu-icon"></i>
         </a>
+      </li>';}else{
+      echo'  <li class="nav-item">
+        <a class="nav-link" href="./../mentor/home.php">
+          <span class="menu-title">Home</span>
+          <i class="mdi mdi-home menu-icon"></i>
+        </a>
       </li>';
+      }
 } elseif ($usertype == 'Judge') {
   echo '
         <li class="nav-item">
@@ -374,6 +384,8 @@ if ($usertype == 'SuperUser') {
           </div>
         </li>';
 } elseif ($usertype == 'Student') {
+
+  if($fquery['Year']==$current_year){
   echo '
             <li class="nav-item">
               <a class="nav-link" href="../student/home.php">
@@ -460,7 +472,16 @@ if ($usertype == 'SuperUser') {
          
         </ul>
       </div>
-    </li> ';
+    </li> ';}else{
+
+    echo'  <li class="nav-item">
+              <a class="nav-link" href="../student/home.php">
+                <span class="menu-title">Home</span>
+                <i class="mdi mdi-view-dashboard menu-icon"></i>
+              </a>
+            </li>';
+
+    }
 }
 
 echo '</ul>

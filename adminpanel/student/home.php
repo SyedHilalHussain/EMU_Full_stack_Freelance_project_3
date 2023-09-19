@@ -1,5 +1,14 @@
 <?php
+session_start();
 include '../superadmin/config.php';
+if(isset($_SESSION['id'])){
+$current_year = date("Y");	
+$id= $_SESSION['id'];
+$year_query=mysqli_query($conn,"SELECT Year from tbl_user WHERE id = $id");
+$year_row=mysqli_fetch_assoc($year_query);
+if($year_row['Year']== $current_year){
+  
+
 
 
 if (isset($_GET['year'])) {
@@ -101,14 +110,16 @@ $date_check = '2030-09-27 00:00:00';
 						<span class="subtitle">Portal</span>
 					</h3>
 
-					<nav aria-label="breadcrumb">
+					<!-- <nav aria-label="breadcrumb">
 						<ul class="breadcrumb">
 							<li class="breadcrumb-item active" aria-current="page">
 								<span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-success align-middle"></i>
 							</li>
 						</ul>
-					</nav>
+					</nav> -->
 				</div>
+
+		
 				<div class="row">
 					<div class="col-12 grid-margin">
 						<div class="card">
@@ -133,18 +144,21 @@ $date_check = '2030-09-27 00:00:00';
 										<tbody>
 
 
-											<?php
-											$q_team = mysqli_query($conn, "select distinct tt.id as team_id,tt.project_team_name as project_name,tt.project_description,tt.category,tt.video_pitch, tt.log_book
-				from tbl_team tt, tbl_team_mentor ttm, tbl_student_mentor ts,tbl_team_member ttmb
-				where ttmb.student_id = $id 
-                and ttmb.team_id is not null
-				and ttmb.team_id = tt.id
-				and year = '2023'
-				and tt.deleted = 0");
+														<?php
+														$q_team = mysqli_query($conn, "select distinct tt.id as team_id,tt.project_team_name as project_name,tt.project_description,tt.category,tt.video_pitch, tt.log_book
+							from tbl_team tt, tbl_team_mentor ttm, tbl_student_mentor ts,tbl_team_member ttmb
+							where ttmb.student_id = $id 
+                			and ttmb.team_id is not null
+							and ttmb.team_id = tt.id
+							and year = '2023'
+							and tt.deleted = 0");
 
 											while ($r_team = mysqli_fetch_assoc($q_team)) {
 												$team_id = $r_team['team_id'];
-												$team_m_q = mysqli_query($conn, "select GROUP_CONCAT(student_first_name) as members from tbl_team_member where team_id = $team_id and deleted = 0");
+												$team_m_q = mysqli_query($conn, "SELECT GROUP_CONCAT(s.student_first_name) AS members
+												FROM tbl_team_member tm
+												JOIN student s ON tm.student_id = s.student_id
+												WHERE tm.team_id = $team_id AND s.deleted = 0;");
 												$team_m_r = mysqli_fetch_assoc($team_m_q);
 
 
@@ -239,3 +253,20 @@ $date_check = '2030-09-27 00:00:00';
 </body>
 
 </html>
+
+<?php   
+
+												}else{
+
+include '../note.php';
+
+												}}else{
+
+													echo "<script>alert('please log in first');
+													document.location='../../login.php';
+													
+													</script>";
+												}
+
+
+?>

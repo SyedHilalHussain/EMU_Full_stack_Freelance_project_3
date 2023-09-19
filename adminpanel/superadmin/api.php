@@ -227,6 +227,7 @@ function edit_member(){
         $phone = $_POST['phone'];
         $password = $_POST['password'];
         $category = $_POST['category'];
+        $user_type = $_POST['user_type'];
         $id =$_POST['user_id'];
         $year=date('Y');
         if (isset($_FILES['dp']) && $_FILES['dp']['size'] >0 ) {
@@ -252,7 +253,8 @@ function edit_member(){
                                                     email = '$email',
                                                     password = '$password',
                                                     category = '$category',
-                                                    profile_pic='$filenewname'
+                                                    user_type = '$user_type',
+                                                    profile_pic='$filenewname',
                                                     Year='$year'
                                                     where id = $id");
                                                     if($this->conn->query($q)){
@@ -283,8 +285,12 @@ function edit_member(){
                                                     last_name = '$last_name',
                                                     phone = '$phone',
                                                     email = '$email',
+                                                    user_type = '$user_type',
+                                                    category = '$category',
                                                     password = '$password',
-                                                    category = '$category' where id = $id");
+                                                    category = '$category',
+                                                    Year='$year'
+                                                    where id = $id");
             if($this->conn->query($q)){
             $resp['status'] = 'Success';
             $resp['msg'] = 'Profile updated successfully';

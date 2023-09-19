@@ -33,7 +33,10 @@ if ($c_vt > 0) {
     }
 
 
-    $sql_students = mysqli_query($conn, "select * from tbl_team_member where team_id = $team_id and deleted = 0");
+    $sql_students = mysqli_query($conn, "SELECT GROUP_CONCAT(s.student_first_name) AS members
+    FROM tbl_team_member tm
+    JOIN student s ON tm.student_id = s.student_id
+    WHERE tm.team_id = $team_id AND s.deleted = 0;");
     $c_students = mysqli_num_rows($sql_students);
 }
 // else 
@@ -440,7 +443,10 @@ if ($c_vt > 0) {
 
                         <br>
                         <?php
-                        $t_q = mysqli_query($conn, "select * from tbl_team_member where team_id = $team_id");
+                        $t_q = mysqli_query($conn, "SELECT *
+                        FROM tbl_team_member tm
+                        JOIN student s ON tm.student_id = s.student_id
+                        WHERE tm.team_id = $team_id ");
                         $i = 1;
                         while ($row = mysqli_fetch_assoc($t_q)) {
 
@@ -469,7 +475,7 @@ if ($c_vt > 0) {
                                         <td><?php echo $row['student_school_name']; ?></td>
                                         <td><?php echo $row['student_school_district']; ?></td>
                                         <td>
-                                            <a href="edit_member.php?student_id=<?php echo $row['id']; ?>">
+                                            <a href="edit_member.php?student_id=<?php echo $row['student_id']; ?>">
                                                 <button type="button" class="btn btn-success" name="submit">Edit</button>
                                             </a>
                                         </td>
@@ -478,7 +484,7 @@ if ($c_vt > 0) {
                                 <?php } ?>
                                 <tr>
                                     <td colspan="8">
-                                        <a href="add_more_students.php?team_id=<?php echo $team_id; ?>">
+                                        <a href="add_student.php?team_id=<?php echo $team_id; ?>">
                                             <button type="button" name="add" class="btn btn-success">Add More Team Members</button>
                                         </a>
                                     </td>

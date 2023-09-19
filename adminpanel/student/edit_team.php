@@ -394,7 +394,10 @@ if (($year) == date("Y")) {
 
                                     <br>
                                     <?php
-                                    $t_q = mysqli_query($conn, "select * from tbl_team_member where team_id = $team_id");
+                                    $t_q = mysqli_query($conn, "SELECT *
+                                    FROM tbl_team_member tm
+                                    JOIN student s ON tm.student_id = s.student_id
+                                    WHERE tm.team_id = $team_id");
                                     $i = 1;
                                     while ($row = mysqli_fetch_assoc($t_q)) {
 
@@ -423,7 +426,7 @@ if (($year) == date("Y")) {
                                                     <td><?php echo $row['student_school_name']; ?></td>
                                                     <td><?php echo $row['student_school_district']; ?></td>
                                                     <td>
-                                                        <a href="edit_member.php?student_id=<?php echo $row['id']; ?>">
+                                                        <a href="edit_member.php?student_id=<?php echo $row['student_id']; ?>">
                                                             <button type="button" class="btn btn-success" name="submit">Edit</button>
                                                         </a>
                                                     </td>

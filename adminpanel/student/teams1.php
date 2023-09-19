@@ -416,6 +416,7 @@ if (($year) == date("Y")) {
 
                         <input type="checkbox" name="terms" id="terms" required > I Agree to the Terms & Conditions
                         <input type="hidden" name="mentorid" id="mentorid" value="<?php echo $mentor_id ?>" > 
+                        <input type="hidden" name="studentid" id="studentid" value="<?php echo $id ?>" > 
 
 
                     </div>
