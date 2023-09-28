@@ -13,14 +13,26 @@ from tbl_team tt, tbl_team_mentor ttm, tbl_user tu
 											and ttm.user_id = tu.id");
 
 $d_vt = mysqli_fetch_assoc($q_vt);
-
+$c_vt = mysqli_num_rows($q_vt);
+if ($c_vt > 0) {
 
 $url = $d_vt['video_pitch'];
-if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match)) {
-    $youtube_id = $match[1];
+preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match);
+    if (!empty($match) && isset($match[1])) {
+        $youtube_id = $match[1];
+    } else {
+        // Handle the case when the YouTube ID is not found or URL is not present.
+        $youtube_id = null; // You can set a default value or take appropriate action.
+    }
+
+
 }
-
-
+else 
+{
+	echo "<script>alert('No Such Team Available')</script>
+    <script>window.location.href='grading.php';</script>
+    ";
+}
 
 
 ?>
@@ -356,7 +368,10 @@ if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*
 
                             <br>
                             <?php
-                            $t_q = mysqli_query($conn, "select * from tbl_team_member where team_id = $team_id");
+                            $t_q = mysqli_query($conn, "SELECT *
+                            FROM tbl_team_member tm
+                            JOIN student s ON tm.student_id = s.student_id
+                            WHERE tm.team_id = $team_id ");
                             $i = 1;
                             while ($row = mysqli_fetch_assoc($t_q)) {
 

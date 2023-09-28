@@ -23,7 +23,7 @@ echo '
   <div class="card-body">
     <h4 class="card-title">Recent Tickets</h4>
     <div class="table-responsive">
-      <table class="table">
+      <table class="table table1">
         <thead>
           <tr>
             <th>Team Name</th>
@@ -49,7 +49,10 @@ echo '
                 $youtube_id = $match[1];
             }
             $team_id = $r_team['team_id'];
-        $team_m_q = mysqli_query($conn, "select GROUP_CONCAT(student_first_name) as members from tbl_team_member where team_id = $team_id");
+        $team_m_q = mysqli_query($conn, "SELECT GROUP_CONCAT(s.student_first_name) AS members
+        FROM tbl_team_member tm
+        JOIN student s ON tm.student_id = s.student_id
+        WHERE tm.team_id = $team_id");
         $team_m_r = mysqli_fetch_assoc($team_m_q);
         
         
@@ -64,8 +67,8 @@ echo '
             <td>'.$r_team["category"] .'</td>
             <td>'.$team_m_r["members"].'</td>
             <td>
-            <button class="btn btn-sm btn-gradient-success">Update Details</button>
-                          </td>
+            <a href="edit_team_liveqa.php?team_id='.$r_team["team_id"].'"><button class="btn   btn-sm btn-gradient-success ">Update Details</button></a>
+            </td>
           </tr>
        ';
            } 

@@ -41,6 +41,14 @@ include 'config.php';
                         </span> Dashboard ->
                         <span class="subtitle">Edit Users</span>
                     </h3>
+                    <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
+      </li>
+    </ul>
+  </nav>
+                    </div>
                     <div class="my-3 my-3" style="
                  
                  display: flex;
@@ -68,7 +76,7 @@ include 'config.php';
 
                     </div>
 
-                </div>
+               
                 <div class="row ">
                     <div class="col-12 grid-margin">
                         <div class="card">

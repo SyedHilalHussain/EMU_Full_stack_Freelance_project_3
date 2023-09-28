@@ -10,7 +10,7 @@ $timezone = date_default_timezone_set('America/New_York');
 $date = date('Y-m-d H:i:s');
 $today_at_midnight = strtotime('midnight');
 $terms= 0;
-$date_check = '2023-09-27 00:00:00';
+$date_check = '2023-10-27 00:00:00';
 echo $date;
 if (($year) == date("Y")) {
     if ($date <= $date_check) {

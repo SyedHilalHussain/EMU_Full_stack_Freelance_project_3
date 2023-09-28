@@ -43,21 +43,31 @@ include 'config.php';
     <div class="main-panel">
       <div class="content-wrapper updated">
 
-        <div class="page-header mb-5">
+        <div class="page-header mb-3">
           <h3 class="page-title">
             <span class="page-title-icon text-white me-2">
               <i class="mdi mdi-view-dashboard"></i>
-            </span> Dashboard ->
+            </span>
             <span class="subtitle">Users</span>
           </h3>
-          <div class="my-3 my-3" style="
+          <nav aria-label="breadcrumb">
+      <ul class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
+          </li>
+        </ul>
+       </nav>
+          
+
+        </div>
+        <div class="my-3 my-3" style="
                  
                  display: flex;
                  align-items: center;
                  justify-content: center;
                  background-color: #f4f7ff;
                  overflow: hidden;">
-            <div class="toast1 mt-5 ">
+            <div class="toast1 mt-2 ">
 
               <div class="toast1-content">
                 <i class="mdi mdi-alert-circle-outline check"></i>
@@ -76,9 +86,7 @@ include 'config.php';
 
 
           </div>
-
-        </div>
-        <div class="row ">
+        <div class="row mt-2">
           <div class="col-12 grid-margin">
             <div class="card">
               <div class="card-body">
@@ -330,7 +338,7 @@ include 'config.php';
   <!-- Custom js for this page -->
   <script src="../assets/js/dashboard.js"></script>
   <script src="../assets/js/todolist.js"></script>
-  <script src="../assets/js/ajaxscript.js?v=4" type="text/javascript"></script>
+  <script src="../assets/js/ajaxscript.js?v=5" type="text/javascript"></script>
   <!-- End custom js for this page -->
 </body>
 

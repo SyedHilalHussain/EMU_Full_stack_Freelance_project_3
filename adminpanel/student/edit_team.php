@@ -8,7 +8,7 @@ $id = $_SESSION['id'];
 $name = $_SESSION['name'];
 $mentor_id = $_SESSION['mentor_id'];
 
-$team_id = $_GET['team_id'];
+$team_id = base64_decode($_GET['team_id']);
 $name = $_SESSION['name'];
 $year = date("Y");
 $timezone = date_default_timezone_set('America/New_York');
@@ -76,7 +76,7 @@ if (($year) == date("Y")) {
                                 // Upload
                                 if (move_uploaded_file($filetmpname, $filedestination)) {
                                     // Insert record
-                                    $query = "update tbl_team set video_pitch  = '" . $filenewname . "' where id = $team_id";
+                                    $query = "update tbl_team set video_pitch  = '" . $filedestination. "' where id = $team_id";
 
                                     mysqli_query($conn, $query);
                                     $_SESSION['message'] = "Upload successfully.";
@@ -272,7 +272,13 @@ if (($year) == date("Y")) {
                         <span class="subtitle">Team Editing</span>
                     </h3>
 
-
+                    <nav aria-label="breadcrumb">
+      <ul class="breadcrumb border-0">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
+          </li>
+        </ul>
+       </nav>
                 </div>
                 <div class="my-3 mt-5" style="
                  
@@ -435,7 +441,7 @@ if (($year) == date("Y")) {
                                             <?php } ?>
                                             <tr>
                                                 <td colspan="8">
-                                                    <a href="add_student.php?team_id=<?php echo $team_id; ?>">
+                                                    <a href="add_student.php?team_id=<?php echo $_GET['team_id']; ?>">
                                                         <button type="button" name="add" class="btn btn-success">Add More Team Members</button>
                                                     </a>
                                                 </td>

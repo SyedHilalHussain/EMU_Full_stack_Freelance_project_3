@@ -104,7 +104,10 @@ include '../superadmin/config.php';
 	
 				
 					$team_id = $r_team['team_id'];
-				$team_m_q = mysqli_query($conn, "select GROUP_CONCAT(student_first_name) as members from tbl_team_member where team_id = $team_id");
+				$team_m_q = mysqli_query($conn, "SELECT GROUP_CONCAT(s.student_first_name) AS members
+        FROM tbl_team_member tm
+        JOIN student s ON tm.student_id = s.student_id
+        WHERE tm.team_id = $team_id");
 				$team_m_r = mysqli_fetch_assoc($team_m_q);
 				
 				$q_e = mysqli_query($conn,"select * from tbl_judge_assessment where team_id = $team_id and user_id = $judge_id");
@@ -148,11 +151,16 @@ include '../superadmin/config.php';
 															<td><?php echo $team_m_r['members']?></td>  
 													<td><?php echo $r_team['category']?></td>  
 													<td><?php echo $status?></td> 
-													<?php if($r_q_e) { ?>
-													<td><a  href="../superadmin/update_evaluation_team.php?team_id=<?php echo $r_team['team_id']?>&judge_id=<?php echo $judge_id ?>" ><button type="button" style="margin:0px;"  class="btn-success btn-sm" >Update Evaluation</button></a></td> 
-													<?php }else{ ?>
+													<!-- <?php if($r_q_e) { ?> -->
+                            <?php  
+                              $encode_team_id = base64_encode($r_team['team_id']);
+                              $encode_judge_id =base64_encode($judge_id);
+                              
+                              ?>
+													<td><a  href="../superadmin/update_evaluation_team.php?team_id=<?php echo $encode_team_id ?>&judge_id=<?php echo $encode_judge_id ?>" ><button type="button" style="margin:0px;"  class="btn-success btn-sm" >Update Evaluation</button></a></td> 
+													<!-- <?php }else{ ?>
 													<td><a href="evaluate_team.php?team_id=<?php echo $r_team['team_id']?>"><button type="button" style="margin:0px;"  class="btn-success btn-sm"  onclick="edit(this)">Evaluate Team</button></a></td> 
-													<?php }?>
+													<?php }?> -->
 												</tr> 
 				<?php } ?>								
 

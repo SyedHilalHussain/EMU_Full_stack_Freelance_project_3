@@ -427,42 +427,20 @@ if ($usertype == 'SuperUser') {
       <span class="menu-title">Download Consent Form</span>
       <i class="mdi mdi-download menu-icon"></i></a>
     </li>
-            <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <span class="menu-title">Last Year Events</span>
-              <i class="menu-arrow"></i>
-              <i class="mdi mdi-calendar menu-icon"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-               ';
-    $current = date("Y");
-  
-    $q_y = mysqli_query($conn, "select distinct year
-              from tbl_team tt, tbl_team_mentor ttm
-              where ttm.team_id = tt.id
-              and tt.deleted = 0
-              and year <> $current");
-    while ($q_y_d = mysqli_fetch_assoc($q_y)) {
-      $y = $q_y_d['year'];
-  
-      echo ' <li class="nav-item "> <a class="nav-link" href="../generaluser/generalhome.php?year=' . $y . '">' . $y . '</a></li>';
-    }
+          ';
     echo '
                
-              </ul>
-            </div>
-          </li>
+            
         
           <li class="nav-item "> <a href="#" class=" nav-link "  >
           LogBook</a></li>
           <li class="nav-item">
-      <a class="nav-link ui-3" data-bs-toggle="collapse1" href="#" data-bs-target="#ui-basic3" aria-expanded="false" aria-controls="ui-basic3">
+      <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic3"  aria-expanded="false" aria-controls="ui-basic3">
         <span class="menu-title">Tools</span>
         <i class="menu-arrow"></i>
         <i class="mdi mdi-toolbox menu-icon"></i>
       </a>
-      <div class="collapse collapse1" id="ui-basic3">
+      <div class="collapse" id="ui-basic3">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item "> <a href="#" class=" nav-link "  >
           BrainStorm</a></li>

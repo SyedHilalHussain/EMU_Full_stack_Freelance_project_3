@@ -10,7 +10,7 @@ $timezone = date_default_timezone_set('America/New_York');
 $date = date('Y-m-d H:i:s');
 $today_at_midnight = strtotime('midnight');
 $terms= 0;
-$date_check = '2023-09-27 00:00:00';
+$date_check = '2023-10-27 00:00:00';
 echo $date;
 if (($year) == date("Y")) {
     if ($date <= $date_check) {
@@ -34,9 +34,9 @@ if (($year) == date("Y")) {
             
             #echo 'tesitng'.$year;
           
-            if (mysqli_query($conn, "insert into tbl_team (project_team_name,project_description,category,year) values ('$team_name', '$project_description','$category','$year')")) {
+            if (mysqli_query($conn, "INSERT into tbl_team (project_team_name,project_description,category,year) values ('$team_name', '$project_description','$category','$year')")) {
                 $team_id = mysqli_insert_id($conn);
-                $team_q = mysqli_query($conn, "insert into tbl_team_mentor values (NULL,$team_id,$mentor_id,'','','')");
+                $team_q = mysqli_query($conn, "INSERT into tbl_team_mentor values (NULL,$team_id,$mentor_id,'','','')");
                 if ($team_q) {
                     $student = 1;
                     $team_submit = 1;
@@ -47,29 +47,6 @@ if (($year) == date("Y")) {
                         mysqli_query($conn, "INSERT INTO tbl_team_member (team_id , student_id) VALUES ($team_id, $p)");
                       
 
-                    // Check if the student's ID exists in tbl_years table
-                    $checkQuery = "SELECT COUNT(*) AS count FROM tbl_years WHERE user_id = $p";
-                    $checkResult = mysqli_query($conn, $checkQuery);
-                    $row = mysqli_fetch_assoc($checkResult);
-                    $count = $row['count'];
-
-                    if ($count == 0) {
-                       // If student's ID is not in the table, insert a new record for the current year
-                       $insertQuery = "INSERT INTO tbl_years (user_id, current_year) VALUES ($p, $year)";
-                       mysqli_query($conn, $insertQuery);
-                    } else {
-                       // Check if the current year is already present for the student
-                       $yearCheckQuery = "SELECT COUNT(*) AS yearCount FROM tbl_years WHERE user_id = $p AND current_year = $year";
-                       $yearCheckResult = mysqli_query($conn, $yearCheckQuery);
-                       $yearRow = mysqli_fetch_assoc($yearCheckResult);
-                       $yearCount = $yearRow['yearCount'];
-                    
-                       if ($yearCount == 0) {
-                          // If current year is not present, insert a new record for the current year
-                          $insertYearQuery = "INSERT INTO tbl_years (user_id, current_year) VALUES ($p, $year)";
-                          mysqli_query($conn, $insertYearQuery);
-                       }
-                    }
 
                     }}
                 }
@@ -97,29 +74,9 @@ if (($year) == date("Y")) {
                 //$q_u = mysqli_query($conn, "select * from tbl_user where id= $p");
                 //$r_u = mysqli_fetch_assoc($q_u);
                 mysqli_query($conn, "INSERT INTO tbl_team_member (team_id , student_id) VALUES ($team_id, $p)");
-                #echo "update tbl_team_member set team_id = $team_id where student_id = $p";
-                $checkQuery = "SELECT COUNT(*) AS count FROM tbl_years WHERE user_id = $p";
-                $checkResult = mysqli_query($conn, $checkQuery);
-                $row = mysqli_fetch_assoc($checkResult);
-                $count = $row['count'];
+               
 
-                if ($count == 0) {
-                   // If student's ID is not in the table, insert a new record for the current year
-                   $insertQuery = "INSERT INTO tbl_years (user_id, current_year) VALUES ($p, $year)";
-                   mysqli_query($conn, $insertQuery);
-                } else {
-                   // Check if the current year is already present for the student
-                   $yearCheckQuery = "SELECT COUNT(*) AS yearCount FROM tbl_years WHERE user_id = $p AND current_year = $year";
-                   $yearCheckResult = mysqli_query($conn, $yearCheckQuery);
-                   $yearRow = mysqli_fetch_assoc($yearCheckResult);
-                   $yearCount = $yearRow['yearCount'];
-                
-                   if ($yearCount == 0) {
-                      // If current year is not present, insert a new record for the current year
-                      $insertYearQuery = "INSERT INTO tbl_years (student_id, current_year) VALUES ($p, $year)";
-                      mysqli_query($conn, $insertYearQuery);
-                   }
-                }
+            
             }
             echo "<script type='text/javascript'>window.location.href = 'home.php';</script>";
         }

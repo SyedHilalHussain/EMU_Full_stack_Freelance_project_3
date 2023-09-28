@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 include 'config.php';
 $interest_q = mysqli_query($conn, "select count(*) as count from tbl_user where user_type not in ('SuperUser')");
 $interest_d = mysqli_fetch_assoc($interest_q);
@@ -32,19 +34,31 @@ $incomple_v_q = mysqli_query($conn, "select count(*) as count from tbl_team tt w
 $incomplete_v_d = mysqli_fetch_assoc($incomple_v_q);
 
 
-$school_d_q = mysqli_query($conn, "select count(distinct student_school_district) as count from tbl_team_member");
+$school_d_q = mysqli_query($conn, "select count(distinct student_school_district) as count from student");
 $school_d_d = mysqli_fetch_assoc($school_d_q);
 
-$school_d_aa = mysqli_query($conn, "select count(*)as count from tbl_team where id in (select team_id from tbl_team_member where student_school_district like '%Ann Arbor%')");
+$school_d_aa = mysqli_query($conn, "select count(*)as count from tbl_team where id in (SELECT tm.team_id
+FROM tbl_team_member AS tm
+JOIN student AS s ON tm.student_id = s.student_id
+WHERE s.student_school_district LIKE '%Ann Arbor%')");
 $school_aa_d = mysqli_fetch_assoc($school_d_aa);
 
-$school_d_la = mysqli_query($conn, "select count(*)as count from tbl_team where id in (select team_id from tbl_team_member where student_school_district like '%Livonia%')");
+$school_d_la = mysqli_query($conn, "select count(*)as count from tbl_team where id in (SELECT tm.team_id
+FROM tbl_team_member AS tm
+JOIN student AS s ON tm.student_id = s.student_id
+WHERE s.student_school_district LIKE '%Livonia%')");
 $school_la_d = mysqli_fetch_assoc($school_d_la);
 
-$school_d_pc = mysqli_query($conn, "select count(*)as count from tbl_team where id in (select team_id from tbl_team_member where student_school_district like '%Plymouth%')");
+$school_d_pc = mysqli_query($conn, "select count(*)as count from tbl_team where id in (SELECT tm.team_id
+FROM tbl_team_member AS tm
+JOIN student AS s ON tm.student_id = s.student_id
+WHERE s.student_school_district LIKE '%Plymouth%')");
 $school_pc_d = mysqli_fetch_assoc($school_d_pc);
 
-$school_d_sa = mysqli_query($conn, "select count(*)as count from tbl_team where id in (select team_id from tbl_team_member where student_school_district like '%Saline%')");
+$school_d_sa = mysqli_query($conn, "select count(*)as count from tbl_team where id in (SELECT tm.team_id
+FROM tbl_team_member AS tm
+JOIN student AS s ON tm.student_id = s.student_id
+WHERE s.student_school_district LIKE '%Saline%')");
 $school_sa_d = mysqli_fetch_assoc($school_d_sa);
 
 $tot_j_q = mysqli_query($conn, "select count(*)as count from tbl_user where user_type='Judge'");
@@ -280,7 +294,9 @@ $live_incomplete_pitches = mysqli_fetch_assoc($sel_aq);
   <title>Purple Admin</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+  
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
   <!-- endinject -->
   <!-- Plugin css for this page -->
   <!-- End plugin css for this page -->
@@ -404,7 +420,7 @@ background: linear-gradient(90deg, rgba(246,106,106,1) 13%, rgba(250,112,112,0.9
             <div class="card bg-gradient-success card-img-holder text-white">
               <div class="card-body">
                 <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <a href="#" class="ajaxupdated" data-url="teams.php">
+                <a href="teams.php" >
                   <h4 class="font-weight-normal mb-3">Team Submissions: <i class="mdi mdi-diamond mdi-24px float-right"></i>
                   </h4>
                   <h2 class="mb-3"><?php echo $team_d['count'] ?></h2>
@@ -420,22 +436,22 @@ background: linear-gradient(90deg, rgba(246,106,106,1) 13%, rgba(250,112,112,0.9
             <div class="card bg-gradient-danger card-img-holder text-white">
               <div class="card-body">
                 <img src="../assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <a href="#" class="ajaxupdated" data-url="judges.php" data-title="Judges" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' order by judge_confirm desc,first_name asc">
+                <a href="judges.php" >
                 
                   <h4 class="font-weight-normal">Total Judges<i class="mdi mdi-gavel mdi-24px float-right"></i>
                   </h4>
                   <h2><?php echo $tot_j_d['count']; ?></h2>
                 </a>
-                <a href="#" class="ajaxupdated" data-title="Confirm Judges" data-url="judges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and judge_confirm = 'Y' order by judge_confirm desc,first_name asc">
+                <a href="#" class="result-btn" data-title="Confirm" data-url="confirmjudges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and judge_confirm = 'Y' order by judge_confirm desc,first_name asc">
                   <h4 class="mb-3">Confirmed: <span><?php echo $conf_j_d['count']; ?> </span> </h4>
                 </a>
-                <a href="#" class="ajaxupdated " data-title="Professional Judges" data-url="judges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and  category LIKE 'Professional%' order by first_name asc"><h6 class="card-text ">Professional: <span><?php echo $prof_j_d['count'] ?> </span></h6>
+                <a href="#" class="result-btn " data-title="Professional " data-url="confirmjudges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and  category LIKE 'Professional%' order by first_name asc"><h6 class="card-text ">Professional: <span><?php echo $prof_j_d['count'] ?> </span></h6>
                   </a>
-                   <a href="#" class="ajaxupdated" data-title="Faculty judges" data-url="judges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and  category='Faculty' order by first_name asc"><h6 class="card-text  ">Faculty: <span><?php echo $fac_j_d['count'] ?></span></h6></a>
-                  <a href="#" class="ajaxupdated" data-title="Pre Service Teachers" data-url="judges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and  category LIKE '%Pre-service%' order by first_name asc"> <h6 class="card-text">Pre-Service-Teachers: <span><?php echo $pt_j_d['count'] ?></span> </h6></a>
-                  <a href="#" class="ajaxupdated" data-title="K-12 Teachers" data-url="judges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and category ='K-12 teachers' order by first_name asc"><h6 class="card-text ">K-12 Teachers: <span><?php echo $k_j_d['count'] ?> </span> </h6></a>
-                  <a href="#" class="ajaxupdated" data-title="Students" data-url="judges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and  category='Student' order by first_name asc"><h6 class="card-text ">Student: <span><?php echo $stud_j_d['count'] ?></span></h6></a>
-                  <a href="#" class="ajaxupdated" data-title="Other" data-url="judges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and  category='Others' order by first_name asc"><h6 class="card-text ">Others: <span><?php echo $other_j_d['count'] ?></span></h6></a>
+                   <a href="#" class="result-btn" data-title="Faculty " data-url="confirmjudges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and  category LIKE '%Faculty%' order by first_name asc"><h6 class="card-text  ">Faculty: <span><?php echo $fac_j_d['count'] ?></span></h6></a>
+                  <a href="#" class="result-btn" data-title="Pre Service Teachers " data-url="confirmjudges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and  category LIKE '%Pre-service%' order by first_name asc"> <h6 class="card-text">Pre-Service-Teachers: <span><?php echo $pt_j_d['count'] ?></span> </h6></a>
+                  <a href="#" class="result-btn" data-title="K-12 Teachers " data-url="confirmjudges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and category ='K-12 teachers' order by first_name asc"><h6 class="card-text ">K-12 Teachers: <span><?php echo $k_j_d['count'] ?> </span> </h6></a>
+                  <a href="#" class="result-btn" data-title="Students " data-url="confirmjudges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and  category='Student' order by first_name asc"><h6 class="card-text ">Student: <span><?php echo $stud_j_d['count'] ?></span></h6></a>
+                  <a href="#" class="result-btn" data-title="Other " data-url="confirmjudges.php" data-query="select distinct id,first_name, last_name, category,judge_confirm from tbl_user where user_type='Judge' and  category='Others' order by first_name asc"><h6 class="card-text ">Others: <span><?php echo $other_j_d['count'] ?></span></h6></a>
                 
 
               </div>
@@ -504,9 +520,9 @@ GROUP BY
                                         group by (judge_name)">    <h4 class="font-weight-normal mb-3">Judges Allocation to Teams<i class="mdi mdi-diamond mdi-24px float-right"></i>
                 </h4>
                 <h2 class="mb-3"><?php echo $count_j; ?></h2></a>
-                <h6 class="card-text">  <a href="#" class="ajaxupdated" data-title="Team Allocation To Judges" data-url="view_judge_team3.php" data-query="select  distinct user_id, GROUP_CONCAT(team_id) as team_list ,count(*) as count from tbl_judge_team group by (user_id) having count(user_id) <= 3">   
-                  3 Teams and less than 3: <span><?php echo $count_3j ?></span></a> <br>  <a href="#" class="ajaxupdated" data-title="Team Allocation To Judges" data-url="view_judge_team3.php" data-query="select  distinct user_id, GROUP_CONCAT(team_id) as team_list ,count(*) as count from tbl_judge_team group by (user_id) having count(user_id)=4">   
-                   4 Teams: <span><?php echo $count_4j ?></span></a> <br>  <a href="#" class="ajaxupdated" data-title="Team Allocation To Judges" data-url="view_judge_team3.php" data-query="select  distinct user_id, GROUP_CONCAT(team_id) as team_list ,count(*) as count from tbl_judge_team group by (user_id) having count(user_id)=5">   
+                <h6 class="card-text">  <a href="#" class="ajaxupdated" data-title="Judges Allocation To Team" data-url="view_judge_team3.php" data-query="select  distinct user_id, GROUP_CONCAT(team_id) as team_list ,count(*) as count from tbl_judge_team group by (user_id) having count(user_id) <= 3">   
+                  3 Teams and less than 3: <span><?php echo $count_3j ?></span></a> <br>  <a href="#" class="ajaxupdated" data-title="Judges Allocation To Team" data-url="view_judge_team3.php" data-query="select  distinct user_id, GROUP_CONCAT(team_id) as team_list ,count(*) as count from tbl_judge_team group by (user_id) having count(user_id)=4">   
+                   4 Teams: <span><?php echo $count_4j ?></span></a> <br>  <a href="#" class="ajaxupdated" data-title="Judges Allocation To Team" data-url="view_judge_team3.php" data-query="select  distinct user_id, GROUP_CONCAT(team_id) as team_list ,count(*) as count from tbl_judge_team group by (user_id) having count(user_id)=5">   
                    5 Teams: <span><?php echo $count_5j ?></span></a> </h6>
 
 
@@ -562,75 +578,7 @@ GROUP BY
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-12 grid-margin">
-            <div class="card">
-              <div class="card-body">
-                <h4 class="card-title">Recent Tickets</h4>
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th> Assignee </th>
-                        <th> Subject </th>
-                        <th> Status </th>
-                        <th> Last Update </th>
-                        <th> Tracking ID </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <img src="../assets/images/faces/face1.jpg" class="me-2" alt="image"> David Grey
-                        </td>
-                        <td> Fund is not recieved </td>
-
-                        <td>
-                          <label class="badge badge-gradient-success">DONE</label>
-                        </td>
-                        <td> Dec 5, 2017 </td>
-                        <td> WD-12345 </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <img src="../assets/images/faces/face2.jpg" class="me-2" alt="image"> Stella Johnson
-                        </td>
-                        <td> High loading time </td>
-                        <td>
-                          <label class="badge badge-gradient-warning">PROGRESS</label>
-                        </td>
-                        <td> Dec 12, 2017 </td>
-                        <td> WD-12346 </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <img src="../assets/images/faces/face3.jpg" class="me-2" alt="image"> Marina Michel
-                        </td>
-                        <td> Website down for one week </td>
-                        <td>
-                          <label class="badge badge-gradient-info">ON HOLD</label>
-                        </td>
-                        <td> Dec 16, 2017 </td>
-                        <td> WD-12347 </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <img src="../assets/images/faces/face4.jpg" class="me-2" alt="image"> John Doe
-                        </td>
-                        <td> Loosing control on server </td>
-                        <td>
-                          <label class="badge badge-gradient-danger">REJECTED</label>
-                        </td>
-                        <td> Dec 3, 2017 </td>
-                        <td> WD-12348 </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        
 
 
       </div>
@@ -663,7 +611,7 @@ GROUP BY
   <!-- Custom js for this page -->
   <!-- <script src="../assets/js/dashboard.js"></script> -->
   <script src="../assets/js/todolist.js"></script>
-  <script src="../assets/js/ajaxscript.js?v=2"></script>
+  <script src="../assets/js/ajaxscript.js?v=4"></script>
   <!-- End custom js for this page -->
 </body>
 

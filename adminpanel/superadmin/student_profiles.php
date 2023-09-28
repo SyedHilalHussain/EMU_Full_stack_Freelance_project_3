@@ -35,13 +35,21 @@ include 'config.php';
         <div class="main-panel">
             <div class="content-wrapper updated">
 
-                <div class="page-header mb-5">
+                <div class="page-header mb-3">
                     <h3 class="page-title">
                         <span class="page-title-icon text-white me-2">
                             <i class="mdi mdi-view-dashboard"></i>
                         </span> Dashboard ->
                         <span class="subtitle">Student Profiles </span>
                     </h3>
+                    <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
+      </li>
+    </ul>
+  </nav>
+  </div>
                     <div class="my-3 my-3" style="
                  
                  display: flex;
@@ -67,40 +75,42 @@ include 'config.php';
 
 
 
-                    </div>
+                    
 
                 </div>
                 <div class="row ">
                     <div class="col-12 grid-margin">
                         <div class="card">
                         <?php 
-                         $q_team = mysqli_query($conn, "SELECT ttm.*, t.year AS active_year FROM tbl_team_member AS ttm JOIN tbl_team AS t ON ttm.team_id = t.id 
-                         WHERE ttm.student_id IS NOT NULL"); 
-                        $no_rows= mysqli_num_rows($q_team);
-                        $query = "SELECT DISTINCT current_year
-                                    FROM tbl_years
-                                    ORDER BY current_year DESC
-                                    LIMIT 4";
-                          
-                          $result = mysqli_query($conn, $query);
-                                    
-                                    ?> 
-                        <div class="d-flex justify-content-between mx-2 mt-2 mb-0">
-                                    <h4 class="card-title mt-1">Student Profiles For <span id="year_span">ALL .
-                                       </span> </h4>
-                                  
-                                  <div class="d-flex justify-content-between">
-                                    <label for="studentType " class="mt-1">Student Grade:</label>
-                                    <select name="year_change" id="year_change" class="form-select form-select-sm ms-3" style="width: fit-content;" >
+                                  $q_team = mysqli_query($conn, "SELECT ttm.*,ts.*, t.year AS active_year FROM tbl_team_member AS ttm 
+                                  JOIN tbl_team AS t ON ttm.team_id = t.id 
+                                  JOIN student AS ts ON ttm.student_id = ts.student_id
+                                  "); 
+                                 $no_rows= mysqli_num_rows($q_team);
+                                 $query = "SELECT DISTINCT year
+                                             FROM tbl_team
+                                             ORDER BY year DESC
+                                             LIMIT 4";
 
-                                    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-            <option value="<?php echo $row['current_year']; ?>"><?php echo $row['current_year']; ?></option>
-        <?php } ?>
-                               
-                                    </select>
-                                </div>
-                                </div>
-                                <div class=" mx-2 mt-0" >Total: <span id="total"><?php echo $no_rows ?></span></div>
+                                   $result = mysqli_query($conn, $query);
+
+                                             ?> 
+                                 <div class="d-flex justify-content-between mx-2 mt-2 mb-0">
+                                             <h4 class="card-title mt-1">Student Profiles For <span id="year_span">ALL .
+                                                </span> </h4>
+
+                                           <div class="d-flex justify-content-between">
+                                             <label for="studentType " class="mt-1">Student Grade:</label>
+                                             <select name="year_change" id="year_change" class="form-select form-select-sm ms-3" style="width: fit-content;" >
+
+                                             <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                                       <option value="<?php echo $row['year']; ?>"><?php echo $row['year']; ?></option>
+                        <?php } ?>
+
+                                             </select>
+                                         </div>
+                                         </div>
+                                         <div class=" mx-2 mt-0" >Total: <span id="total"><?php echo $no_rows ?></span></div>
                             <div class="card-body pt-3">
                           
                                     <div class="table-responsive">
@@ -139,7 +149,7 @@ while ($row = mysqli_fetch_assoc($q_team)) {
                                         <td><?php echo $row['student_school_name']; ?></td>
                                         <td><?php echo $row['student_school_district']; ?></td>
                                         <td>
-                                            <a href="edit_members.php?student_id=<?php echo $row['id']; ?>">
+                                            <a href="edit_members.php?student_id=<?php echo $row['student_id']; ?>">
                                                 <button type="button" class="btn btn-small btn-success px-3 py-2" name="submit">Edit</button>
                                             </a>
                                         </td>
@@ -187,8 +197,8 @@ while ($row = mysqli_fetch_assoc($q_team)) {
     <!-- Custom js for this page -->
     <script src="../assets/js/dashboard.js"></script>
     <script src="../assets/js/todolist.js"></script>
-    <script src="../assets/js/ajaxscript.js?v=4" type="text/javascript"></script>
-    <script src="../assets/js/main.js?v=3"></script>
+    <script src="../assets/js/ajaxscript.js?v=5" type="text/javascript"></script>
+    <!-- <script src="../assets/js/main.js?v=3"></script> -->
     <!-- End custom js for this page -->
 
 

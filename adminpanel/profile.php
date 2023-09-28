@@ -390,26 +390,12 @@ if (isset($_POST['submit'])) {
       if($r['Year']==$current_year){
       echo '
       <li class="nav-item">
-        <a class="nav-link" href="./../mentor/home.php">
+        <a class="nav-link" href="../adminpanel/mentor/home.php">
           <span class="menu-title">Home</span>
           <i class="mdi mdi-home menu-icon"></i>
         </a>
       </li>
-      <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic">
-        <span class="menu-title">Add </span>
-        <i class="menu-arrow"></i>
-        <i class="mdi mdi-plus menu-icon"></i>
-      </a>
-      <div class="collapse" id="ui-basic1">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item "> <a href="assign_judge_team.php" class=" nav-link "  >
-          Teams</a></li>
-          
-         
-        </ul>
-      </div>
-    </li>
+     
     
       <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -430,7 +416,7 @@ if (isset($_POST['submit'])) {
       while ($q_y_d = mysqli_fetch_assoc($q_y)) {
         $y = $q_y_d['year'];
 
-        echo ' <li class="nav-item "> <a class="nav-link" href="../mentor/home.php?year=' . $y . '">' . $y . '</a></li>';
+        echo ' <li class="nav-item "> <a class="nav-link" href="../adminpanel/mentor/home.php?year=' . $y . '">' . $y . '</a></li>';
       }
       echo '
         
@@ -456,16 +442,23 @@ if (isset($_POST['submit'])) {
       while ($q_y_d = mysqli_fetch_assoc($q_y1)) {
         $y1 = $q_y_d['year'];
 
-        echo ' <li class="nav-item "> <a class="nav-link" href="../mentor/home_prev.php?year=' . $y1 . '">' . $y1 . '</a></li>';
+        echo ' <li class="nav-item "> <a class="nav-link" href="../adminpanel/mentor/home_prev.php?year=' . $y1 . '">' . $y1 . '</a></li>';
       }
       echo '
          
         </ul>
       </div>
-    </li>';}else{
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" href="../adminpanel/mentor/students.php">
+      <span class="menu-title">Student</span>
+      <i class="mdi mdi-account menu-icon"></i>
+    </a>
+  </li>
+    ';}else{
       echo '
       <li class="nav-item">
-        <a class="nav-link" href="./../mentor/home.php">
+        <a class="nav-link" href="../adminpanel/mentor/home.php">
           <span class="menu-title">Home</span>
           <i class="mdi mdi-home menu-icon"></i>
         </a>
@@ -621,7 +614,13 @@ echo'
       <div class="content-wrapper updated">
         <div class="page-header">
           <h2>User Profile</h2>
-
+          <nav aria-label="breadcrumb">
+      <ul class="breadcrumb border-0">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
+          </li>
+        </ul>
+       </nav>
         </div>
 
 

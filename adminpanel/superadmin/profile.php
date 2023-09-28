@@ -67,8 +67,15 @@ $r = mysqli_fetch_assoc($q);
             <div class="content-wrapper updated">
                 <div class="page-header">
                     <h2>Profile</h2>
-
+                    <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
+      </li>
+    </ul>
+  </nav>
                 </div>
+              
 
                
                 <div class="my-3 mt-5" style="
@@ -194,6 +201,8 @@ $r = mysqli_fetch_assoc($q);
     <!-- Plugin js for this page -->
 
     <script src="../assets/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="../assets/js/off-canvas.js"></script>

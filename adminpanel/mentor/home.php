@@ -1,6 +1,12 @@
 <?php 
+session_start();
 include '../superadmin/config.php';
-
+if(isset($_SESSION['id'])){
+	$current_year = date("Y");	
+	$id= $_SESSION['id'];
+	$year_query=mysqli_query($conn,"SELECT Year from tbl_user WHERE id = $id");
+	$year_row=mysqli_fetch_assoc($year_query);
+	if($year_row['Year']== $current_year){
 
 if(isset($_GET['year']))
 {
@@ -33,7 +39,46 @@ $year = date("Y");
     <link rel="stylesheet" href="../assets/css/style2.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../assets/images/favicon.ico" />
-   
+	<style>
+		::-webkit-scrollbar {
+			width: 5px;
+			height: 5px;
+
+
+		}
+
+		::-webkit-scrollbar-thumb {
+			background-color: green;
+			border-radius: 5px;
+		}
+
+		/* Customize the thumb on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background-color: #555;
+		}
+
+		.table .td_button::-webkit-scrollbar {
+
+			height: 6px !important;
+
+		}
+
+		.table .td_button {
+			max-width: 10rem;
+			overflow: auto !important;
+			white-space: nowrap;
+			padding: 0.1rem 0.2rem;
+			scrollbar-width: 10px !important;
+
+
+
+
+		}
+
+		.table th {
+			font-size: medium !important;
+		}
+	</style>
 </head>
 
 <body>
@@ -77,13 +122,13 @@ $name = $_SESSION['name'];
           <thead class="thead-dark bg-dark text-light" id="table">
                     <tr>
 						<th>Team Name</th>
-						<th>Team Description</th>
-						<th>Category</th>
+						<!-- <th>Team Description</th>
+						<th>Category</th> -->
 						<th>Team Members</th>
                         <th>Video Pitch</th>
                         <th>LogBook</th>
 						<th>Status</th>
-						<?php if (($year) == date("Y")) { ?>
+						<?php if (($year) == '2021') { ?>
                         <th>Actions</th>
 						<?php } ?>
                     </tr>
@@ -101,7 +146,10 @@ $name = $_SESSION['name'];
 				while ($r_team = mysqli_fetch_assoc($q_team))					
 				{
 					$team_id = $r_team['team_id'];
-				$team_m_q = mysqli_query($conn, "select GROUP_CONCAT(student_first_name) as members from tbl_team_member where team_id = $team_id");
+				$team_m_q = mysqli_query($conn, "SELECT GROUP_CONCAT(s.student_first_name) AS members
+				FROM tbl_team_member tm
+				JOIN student s ON tm.student_id = s.student_id
+				WHERE tm.team_id = $team_id");
 				$team_m_r = mysqli_fetch_assoc($team_m_q);
 				
 				
@@ -111,8 +159,8 @@ $name = $_SESSION['name'];
 											
 					<tr> 
 						<td><a href="./../superadmin/viewteams.php?team_id=<?php echo $r_team['team_id']?>"><?php echo $r_team['project_name']?></a></td> 
-						<td><a href="./../superadmin/viewteams.php?team_id=<?php echo $r_team['team_id']?>"><?php echo $r_team['project_description']?></a></td> 
-						<td><a href="./../superadmin/viewteams.php?team_id=<?php echo $r_team['team_id']?>"><?php echo $r_team['category']?></a></td> 
+						<!-- <td><a href="./../superadmin/viewteams.php?team_id=<?php echo $r_team['team_id']?>"><?php echo $r_team['project_description']?></a></td> 
+						<td><a href="./../superadmin/viewteams.php?team_id=<?php echo $r_team['team_id']?>"><?php echo $r_team['category']?></a></td>  -->
 						<td><?php echo $team_m_r['members']?></td>  
 						<?php if($r_team['video_pitch']) {?>
 						<td><a href ="<?php echo $r_team['video_pitch']?>" target="_blank">Video Pitch</a></td> 
@@ -134,10 +182,12 @@ $name = $_SESSION['name'];
 						?>
 						<td title="<?php echo $text;?>"><?php echo 'Incomplete' ; ?></td>  
 						<?php } ?>
-						<?php if (($year) == date("Y")) { ?>
-						<td>
-						<a href="./../superadmin/edit_team.php?team_id=<?php echo $team_id?>"><button type="button" style="margin:0px;"  class="btn-success btn-sm"  onclick="edit(this)">Update Details</button></a>
-						<a onClick="return confirm('Are you sure you want to delete?')" href="set_delete.php?id=<?php echo $team_id?>&table=tbl_team&return=home" class="btn mini purple"> Delete</a>
+						<?php if (($year) == 2021) { 
+							$encoded_team_id = base64_encode($team_id);
+							?>
+						<td class="td_button">
+						<a href="./../superadmin/edit_team.php?team_id=<?php echo $encoded_team_id?>"><button type="button" style="margin:0px;"  class="btn-gradient-success btn-sm"  onclick="edit(this)">Update Details</button></a>
+						<a onClick="return confirm('Are you sure you want to delete?')" href="set_delete.php?id=<?php echo $team_id?>&table=tbl_team&return=home" class="btn border-danger  btn-sm  border"> Delete</a>
 						</td> 
 						<?php } ?>
 						</td> 
@@ -189,3 +239,19 @@ $name = $_SESSION['name'];
 </body>
 
 </html>
+<?php   
+
+												}else{
+
+include '../note.php';
+
+												}}else{
+
+													echo "<script>alert('please log in first');
+													document.location='../../login.php';
+													
+													</script>";
+												}
+
+
+?>

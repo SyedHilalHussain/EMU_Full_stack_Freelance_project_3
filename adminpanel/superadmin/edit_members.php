@@ -22,22 +22,13 @@ if (($year) == date("Y")) {
 
 
 
-if(isset($_GET['student_log_id']))
-{
-	$id_s = $_GET['student_log_id'];
-	#echo 'isndie'.$id_s;
-	
-	$q_s = mysqli_query($conn,"select * from tbl_team_member where student_id = $id_s");
-	$r_s = mysqli_fetch_assoc($q_s);
-	$student_id = $r_s['id'];
-	#echo 'isndie'.$student_id;
-}
-else {
+
+
 $student_id = $_GET['student_id'];
-}
+
 $name = $_SESSION['name'];
 
-$q = mysqli_query($conn,"select * from tbl_team_member where id = $student_id");
+$q = mysqli_query($conn,"select * from student where student_id = $student_id");
 $r = mysqli_fetch_assoc($q);
 
 $url = $r['video_exp_link'];
@@ -254,6 +245,7 @@ if (!empty($match) && isset($match[1])) {
     
         <?php include '../dashboardheader.php'; ?>
         <!-- partial -->
+       
 
         <div class="my-3 my-3" style="
                  
@@ -285,11 +277,23 @@ if (!empty($match) && isset($match[1])) {
 
      <div class="container d-flex justify-content-center col-md-10 px-5">
         <div class="col-9">
-		<form id="edit_member" enctype="multipart/form-data" >
+        <div class=" justify-content-end d-flex ">
+          
+          <nav aria-label="breadcrumb">
+      <ul class="breadcrumb border-0">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
+          </li>
+        </ul>
+       </nav>
+    
+
+        </div>
+		<form id="admin_edit_member" enctype="multipart/form-data" >
             <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-            <br>
+          
             <h3> Student Details:</h3>
-            <br>
+            
 
             <table class="table table-borderless">
 
@@ -408,7 +412,7 @@ if (!empty($match) && isset($match[1])) {
                             <label for="pwd">Attach your photo consent form:</label>
 							<p><a class="nav-link" href="Photo-video waiver form1.pdf" target="_blank">Download the original Photo Consent Form to sign and upload</a></p>
                             <?php if(($r['photo_consent_form']) != '') { ?>
-							<p><a href="../superadmin/test_upload/<?php echo $r['photo_consent_form']?>" target="_blank">Uploaded Consent Form - <?php echo $r['photo_consent_form']?></a></p>		
+							<p><a href="<?php echo $r['photo_consent_form']?>" target="_blank">Uploaded Consent Form - <?php echo $r['photo_consent_form']?></a></p>		
 							<?php } ?>
 							<input type="file" class="form-control" id="studentEmail" name="log_book" placeholder="Upload photo consent form">
                         </div>
@@ -474,8 +478,8 @@ if (!empty($match) && isset($match[1])) {
 				<?php if ($youtube_id=='') {?>
 				<div class="form-group">
 					<video width="300" height="300" controls>
-					  <source src="./test_upload/<?php echo $r['video_exp_link']?>" type="video/mp4">
-					  <source src="./test_upload/<?php echo $r['video_exp_link']?>" type="video/ogg">
+					  <source src="<?php echo $r['video_exp_link']?>" type="video/mp4">
+					  <source src="<?php echo $r['video_exp_link']?>" type="video/ogg">
 					</video>
 						</div>	
 				<?php } else {?>		

@@ -13,10 +13,19 @@ $v_q = mysqli_query($conn, "select * from tbl_team where id = $team_id");
 $v_d = mysqli_fetch_assoc($v_q);
 
 
-$video_pitch = $v_d['video_pitch'];
-$url = $video_pitch;
-preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match);
-$youtube_id = $match[1];
+$c_vt = mysqli_num_rows($v_q);
+if ($c_vt > 0) {
+    $url = $v_d['video_pitch'];
+    preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match);
+    if (!empty($match) && isset($match[1])) {
+        $youtube_id = $match[1];
+    } else {
+        // Handle the case when the YouTube ID is not found or URL is not present.
+        $youtube_id = null; // You can set a default value or take appropriate action.
+    } }  else {
+        echo "<script>alert('No Such Team Available')</script>";
+        echo "<script type='text/javascript'>window.location.href = 'home.php';</script>";
+    }
 
 $l_q = mysqli_query($conn,"select distinct live_qa from tbl_judge_assessment where team_id = '$team_id'");
 $l_d = mysqli_fetch_assoc($l_q);
@@ -154,17 +163,17 @@ $l_d = mysqli_fetch_assoc($l_q);
                     <h3 class="page-title">
                         <span class="page-title-icon  text-white me-2">
                             <i class="mdi mdi-view-dashboard"></i>
-                        </span> Dashboard ->
-                        <span class="subtitle"></span>
+                        </span> 
+                        <span class="subtitle">Edit Team Live Q/A</span>
                     </h3>
 
                     <nav aria-label="breadcrumb">
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page">
-                                <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-success align-middle"></i>
-                            </li>
-                        </ul>
-                    </nav>
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
+      </li>
+    </ul>
+  </nav>
                 </div>
                 <div class="my-3 mt-5" style="
                  
@@ -231,7 +240,10 @@ $l_d = mysqli_fetch_assoc($l_q);
 
                                                 while ($r_team = mysqli_fetch_assoc($q_team)) {
                                                     $team_id = $r_team['team_id'];
-                                                    $team_m_q = mysqli_query($conn, "SELECT GROUP_CONCAT(student_first_name) AS members FROM tbl_team_member WHERE team_id = $team_id");
+                                                    $team_m_q = mysqli_query($conn, "SELECT GROUP_CONCAT(s.student_first_name) AS members
+												FROM tbl_team_member tm
+												JOIN student s ON tm.student_id = s.student_id
+												WHERE tm.team_id = $team_id");
                                                     $team_m_r = mysqli_fetch_assoc($team_m_q);
                                                 ?>
 
@@ -274,10 +286,10 @@ $l_d = mysqli_fetch_assoc($l_q);
                                         <div class="form-group">
                                         <label for="email"> Live Pitch and Q&A Score: </label>
                             <select  name="live_qa" style="margin-left: 36px">
-							<?php if($l_d['live_qa'] !==''){?>
+							<?php if($l_d['live_qa'] !=='' && $l_d['live_qa'] !==NULL){?>
 							<option value="<?php echo $l_d['live_qa']?>" selected><?php echo $l_d['live_qa']?></option>
 							<?php } else {?>
-							<option value="0" selected>Select Points</option>
+							<option value="" selected>Select Points</option>
 							<?php } ?>
 							<?php 
 
@@ -309,14 +321,14 @@ $l_d = mysqli_fetch_assoc($l_q);
 
 <?php if ($youtube_id == '') { ?>
     <div class="form-group">
-        <video width="500" height="400" controls>
+        <video  controls style="width:80%!important; height:100%!important;">
             <source src="<?php echo '../Team/' . $video_pitch ?>" type="video/mp4">
             <source src="<?php echo '../Team/' . $video_pitch ?>" type="video/ogg">
         </video>
     </div>
 <?php } else { ?>
     <div class="form-group">
-        <iframe src="https://www.youtube.com/embed/<?php echo $youtube_id ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/<?php echo $youtube_id ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width: 100%; height:100%;"></iframe>
     </div>
 <?php } ?>
 <p>Don't forget to click on "Submit Evaluation" to record your evaluation.</p>
@@ -340,6 +352,7 @@ $l_d = mysqli_fetch_assoc($l_q);
     <!-- Plugin js for this page -->
 
     <script src="../assets/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="../assets/js/off-canvas.js"></script>

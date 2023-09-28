@@ -99,6 +99,24 @@ $(document).ready(function () {
       },
       success: function (response) {
         $(".updated").html(response);
+        
+      
+        let dataTable = $(".table1").DataTable({
+          debug: true,
+          numbering: false,
+          lengthChange: false,
+          paging: false,
+          info: false,
+          ordering: true,
+          dom: "lrtip",
+          columnDefs: [
+            { orderable: true, className: "reorder", targets: [0, 1, 2] },
+            { orderable: false, targets: "_all" },
+          ],
+        });
+        $("#search").keyup(function () {
+          dataTable.search(this.value).draw();
+        });
       },
       error: function (xhr, status, error) {
         console.log("AJAX request error:", error);
@@ -117,25 +135,12 @@ $(document).ready(function () {
       url +
       "?query=" +
       encodeURIComponent(query) +
-      "&&title=" +
+      "&title=" +
       encodeURIComponent(title);
 
     // Redirect to the new page
     window.location.href = fullUrl;
-    // $.ajax({
-    //   url: url,
-    //   method: "POST",
-    //   data: {
-    //     query: query,
-    //     title: title
-    //   },
-    //   success: function (response) {
-    //     $(".updated").html(response);
-    //   },
-    //   error: function (xhr, status, error) {
-    //     console.log("AJAX request error:", error);
-    //   }
-    // });
+ 
   });
 
   
@@ -166,6 +171,10 @@ $(document).ready(function () {
           $(".message1 .text-1").text(resp.status);
           $(".message1 .text-2").text(resp.msg);
           showAlertBox();
+          setTimeout(function () {
+            location.reload();
+           
+          }, 3000);
         } else if (resp.status == "Failed") {
           faileBox();
           $(".message1 .text-1").text(resp.status);
@@ -327,6 +336,10 @@ $(document).ready(function () {
           "An error occured while register the records"
         );
         showAlertBox();
+        setTimeout(function () {
+          location.reload();
+         
+        }, 3000);
       },
       success: function (resp) {
         if (resp.status == "Success") {
@@ -380,6 +393,9 @@ $(document).ready(function () {
           $(".message1 .text-1").text(resp.status);
           $(".message1 .text-2").text(resp.msg);
           showAlertBox();
+          setTimeout(function () {
+            location.reload();
+          }, 3000);
         } else if (resp.status == "Failed") {
           faileBox();
           $(".message1 .text-1").text(resp.status);
@@ -441,11 +457,11 @@ $(document).ready(function () {
     });
   });
 
-  $("#edit_member").on("submit", function (e) {
+  $("#admin_edit_member").on("submit", function (e) {
     e.preventDefault();
 
     $.ajax({
-      url: "./api.php?action=edit_member",
+      url: "./api.php?action=admin_edit_member",
 
       method: "POST",
       dataType: "json",
@@ -501,6 +517,7 @@ $(document).ready(function () {
       data: { cat: category },
       success: function (html) {
         $("#team_id_1").html(html);
+        
       },
     });
   });
@@ -677,6 +694,9 @@ $(document).ready(function () {
           $(".message1 .text-1").text(resp.status);
           $(".message1 .text-2").text(resp.msg);
           showAlertBox();
+          setTimeout(function () {
+            location.reload();
+          }, 3000);
         } else if (resp.status == "Failed") {
           faileBox();
           $(".message1 .text-1").text(resp.status);
@@ -749,20 +769,33 @@ $(document).ready(function () {
       contentType: false,
       cache: false,
       processData: false,
-      error: (err) => {
-        console.log(err);
-        faileBox();
-        $(".message1 .text-1").text("ERROR");
-        $(".message1 .text-2").text("An error occured:Check console");
-        showAlertBox();
-      },
       success: function (resp) {
         if (resp.status == "Success") {
           successBox();
           $(".message1 .text-1").text(resp.status);
-          $(".message1 .text-2").text(resp.msg);
+          $(".message1 .text-2").html(resp.msg.replace(/\n/g, "<br>"));
+          showAlertBox();
+          setTimeout(function () {
+            location.reload();
+          }, 3000);
+        } else if (resp.status == "Failed") {
+          faileBox();
+          $(".message1 .text-1").text(resp.status);
+          $(".message1 .text-2").html(resp.msg.replace(/\n/g, "<br>"));
+          showAlertBox();
+        } else {
+          requireBox();
+          $(".message1 .text-1").text(resp.status);
+          $(".message1 .text-2").html(resp.msg.replace(/\n/g, "<br>"));
           showAlertBox();
         }
+      },
+      error: (err) => {
+        console.log(err);
+        faileBox();
+        $(".message1 .text-1").text("ERROR");
+        $(".message1 .text-2").text("Unknown Error Check console");
+        showAlertBox();
       },
     });
   });
@@ -795,6 +828,10 @@ $("#year_change").on("change", function (e) {
     method: "POST",
     dataType: "json",
     data: { selectedyear: year_change },
+    error: (err) => {
+      console.log(err);
+    
+    },
     success: function (response) {
       $("#total").html(response.no_rows);
       $("#year_span").html(response.selected_year);
@@ -802,3 +839,6 @@ $("#year_change").on("change", function (e) {
     },
   });
 });
+
+
+

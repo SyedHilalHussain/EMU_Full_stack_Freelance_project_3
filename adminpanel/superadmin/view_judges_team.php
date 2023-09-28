@@ -40,11 +40,17 @@ include 'config.php';
   <h3 class="page-title">
     <span class="page-title-icon text-white me-2">
       <i class="mdi mdi-view-dashboard"></i>
-    </span> Dashboard ->
+    </span> 
     <span class="subtitle">View Assigned Teams To Judge</span>
   </h3>
-
-
+  <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
+      </li>
+    </ul>
+  </nav>
+  </div>
   <div class="my-3 mt-5" style="
                  
                  display: flex;
@@ -71,7 +77,7 @@ include 'config.php';
 
 
                 </div>
-</div>
+
 
 <div class="row">
   <div class="col-12 grid-margin">
@@ -80,12 +86,12 @@ include 'config.php';
         <h4 class="card-title">Recent Tickets</h4>
         <div class="table-responsive">
           <table class="table judge-table table1">
-            <thead>
+            <thead class="table-dark">
               <tr>
                 <th scope="col">Judge</th>
                 <th scope="col">Team Name</th>
                 <th scope="col">Category</th>
-                <th>Delete Record</th>
+                <th scope="col" style="white-space: nowrap;">Delete Record</th>
               </tr>
             </thead>
             <tbody>

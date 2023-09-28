@@ -98,7 +98,10 @@ $name = $_SESSION['name'];
 						$youtube_id = $match[1];
 					}
 					$team_id = $r_team['team_id'];
-				$team_m_q = mysqli_query($conn, "select GROUP_CONCAT(concat(student_first_name,' ',student_last_name)) as members from tbl_team_member where team_id = $team_id");
+				$team_m_q = mysqli_query($conn, "SELECT GROUP_CONCAT(s.student_first_name) AS members
+        FROM tbl_team_member tm
+        JOIN student s ON tm.student_id = s.student_id
+        WHERE tm.team_id = $team_id");
 				$team_m_r = mysqli_fetch_assoc($team_m_q);
 				
 				?>

@@ -9,14 +9,14 @@ echo '
 <h3 class="page-title">
   <span class="page-title-icon  text-white me-2">
     <i class="mdi mdi-view-dashboard"></i>
-  </span> Dashboard ->
+  </span>
   <span class="subtitle">'.$title.'</span>
 </h3>
 
 <nav aria-label="breadcrumb">
   <ul class="breadcrumb">
     <li class="breadcrumb-item active" aria-current="page">
-      <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-success align-middle"></i>
+    <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="location.reload();">Back</button>
     </li>
   </ul>
 </nav>
@@ -27,8 +27,8 @@ echo '
   <div class="card-body">
     <h4 class="card-title">Recent Tickets</h4>
     <div class="table-responsive">
-      <table class="table">
-        <thead>
+      <table class="table table1">
+        <thead class="table-dark">
           <tr>
       	<th scope="col">Judge</th>
 						<th scope="col">Judge Email</th>
@@ -84,8 +84,8 @@ while($r_team = mysqli_fetch_assoc($qu_c))
 				
           
           echo '<tr> 
-          <td><a href="JudgeDetails.php?id='. $r_team["user_id"].'">'. $r_team['judge_name'].'</a></td> 
-          <td><a href="JudgeDetails.php?id='. $r_team["user_id"].'">'. $r_team['email'].'</a></td> 
+          <td><a href="profile.php?id='. $r_team["user_id"].'">'. $r_team['judge_name'].'</a></td> 
+          <td><a href="profile.php?id='. $r_team["user_id"].'">'. $r_team['email'].'</a></td> 
           <td>'. $r_team['project_team_name'].'</a></td> 
           <td>'. $r_team['category'].'</a></td> 
           </tr>

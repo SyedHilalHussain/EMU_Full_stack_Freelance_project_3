@@ -1,12 +1,17 @@
 <?php
 include '../superadmin/config.php';
 session_start();
+$year = date("Y");
+$timezone = date_default_timezone_set('America/New_York');
+$date = date('Y-m-d H:i:s');
+$today_at_midnight = strtotime('midnight');
 
+$date_check = '2030-02-27 00:00:00';
 $user_id = $_SESSION['id'];
 $usertype = $_SESSION['user_type'];
 $username = $_SESSION['name'];
 
-$team_id = $_GET['team_id'];
+$team_id = base64_decode($_GET['team_id']);
 
 $q_vt = mysqli_query($conn, "select distinct tt.id as team_id,tt.project_team_name as project_name,tt.category,tt.project_team_name,tt.project_description,tu.first_name, tu.last_name,tt.video_pitch, tt.log_book,tu.email 
 from tbl_team tt, tbl_team_mentor ttm, tbl_user tu
@@ -39,10 +44,25 @@ if ($c_vt > 0) {
     WHERE tm.team_id = $team_id AND s.deleted = 0;");
     $c_students = mysqli_num_rows($sql_students);
 }
-// else 
-// {
-// 	echo "<script>alert('No Such Team Available')</script>";
-// }
+else 
+{
+	echo "<script>alert('No Such Team Available')</script>
+    <script>window.location.href='home.php';</script>
+    ";
+}
+
+if(isset($_POST['update_team'])){
+    $project_title = $_POST['p_title'];
+    $project_description = $_POST['p_description'];
+    $team_category = $_POST['team_category'];
+
+    $update_team_query = "UPDATE tbl_team SET project_team_name ='$project_title', project_description ='$project_description' where id='$team_id'";
+
+    if(mysqli_query($conn,$update_team_query)){
+        echo "<script type='text/javascript'>Profile Updated Successfully</script>";
+        echo "<script type='text/javascript'>window.location.href = 'home.php';</script>";
+    }
+}
 
 
 
@@ -296,6 +316,7 @@ if ($c_vt > 0) {
                                 <th colspan="3"> Basic Information </th>
                             </tr>
                         </thead>
+                        <form action="<?php $_SERVER["PHP_SELF"] ?>" method="POST">
                         <tbody>
                             <tr>
                                 <td>
@@ -315,7 +336,7 @@ if ($c_vt > 0) {
                                 <td>
                                     <div class="form-group">
                                         <label for="email"><b> Project Title:</b></label>
-                                        <input type="text" readonly class="form-control" id="studentRegNo" value="<?php echo $d_vt['project_name'] ?>" placeholder="Enter student registration number">
+                                        <input type="text" name="p_title" class="form-control" id="studentRegNo" value="<?php echo $d_vt['project_name'] ?>" placeholder="Enter student registration number">
                                     </div>
                                 </td>
                             </tr>
@@ -325,7 +346,7 @@ if ($c_vt > 0) {
 
                                     <div class="form-group">
                                         <label for="studentType"><b>Team Category:</b></label>
-                                        <select name="category" class="form-select" required>
+                                        <select name="team_category" class="form-select"  disabled>
                                             <option>Select Student Grade</option>
                                             <option value="K-2" <?php if ($d_vt['category'] == 'K-2') {
                                                                     echo 'selected';
@@ -351,7 +372,7 @@ if ($c_vt > 0) {
                                 <td colspan="2">
                                     <div class="form-group">
                                         <label for="email"><b>Project Description:</b></label>
-                                        <textarea class="form-control" name="project_description"><?php echo $d_vt['project_description'] ?></textarea>
+                                        <textarea class="form-control" name="p_description"><?php echo $d_vt['project_description'] ?></textarea>
                                     </div>
                                 </td>
                             </tr>
@@ -367,7 +388,7 @@ if ($c_vt > 0) {
     </div>-->
                                         <?php if ($youtube_id == '') { ?>
                                             <div class="form-group">
-                                                <video controls>
+                                                <video controls style="width:100%!important; height:100%!important;">
                                                     <source src="<?php echo $d_vt['video_pitch'] ?>" type="video/mp4">
                                                     <source src="<?php echo $d_vt['video_pitch'] ?>" type="video/ogg">
                                                 </video>
@@ -399,21 +420,22 @@ if ($c_vt > 0) {
                                     <tr>
                                         <td>
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-success" name="submit">Submit</button>
+                                                <button type="submit" class="btn btn-success" name="update_team">Submit</button>
                                             </div>
                                         </td>
                                     </tr>
+
                             <?php }
                             } ?>
-                            </form>
+                           
                             <?php if (($year) == date("Y")) {
                                 if ($date <= $date_check) {
+                                    $encoded_team_id = base64_encode($team_id);
                             ?>
                                     <tr>
                                         <td>
                                             <label>Upload docs</label>
-                                            <!--<a target="_blank" href="edit_team.php?team_id=<?php echo $team_id; ?>" ><button type="submit" class="btn btn-success" name="submit">Edit video pitch/logbook</button></a>	-->
-                                            <a href="edit_team.php?team_id=<?php echo $team_id; ?>"><button type="submit" class="btn btn-success" name="submit">Edit video pitch/logbook</button></a>
+                                            <a href="edit_team.php?team_id=<?php echo $encoded_team_id; ?>"><button type="submit" class="btn btn-success" name="submit">Edit video pitch/logbook</button></a>
 
                                         </td>
                                     </tr>
@@ -421,7 +443,7 @@ if ($c_vt > 0) {
                             <?php }
                             } ?>
                         </tbody>
-
+                        </form>
 
                     </table>
                 </div>
@@ -484,7 +506,7 @@ if ($c_vt > 0) {
                                 <?php } ?>
                                 <tr>
                                     <td colspan="8">
-                                        <a href="add_student.php?team_id=<?php echo $team_id; ?>">
+                                        <a href="add_student.php?team_id=<?php echo $_GET['team_id']; ?>">
                                             <button type="button" name="add" class="btn btn-success">Add More Team Members</button>
                                         </a>
                                     </td>

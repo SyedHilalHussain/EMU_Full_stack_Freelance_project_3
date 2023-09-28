@@ -19,6 +19,8 @@ $category = $_POST['team_category'];
     <title>Purple Admin</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+   
     <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
@@ -29,7 +31,12 @@ $category = $_POST['team_category'];
     <link rel="stylesheet" href="../assets/css/style2.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../assets/images/favicon.ico" />
-   
+   <style>
+     thead tr th {
+      font-size: medium!important;
+      white-space: nowrap!important;
+    }
+   </style>
 </head>
 
 <body>
@@ -45,14 +52,15 @@ $category = $_POST['team_category'];
   <h3 class="page-title">
     <span class="page-title-icon text-white me-2">
       <i class="mdi mdi-view-dashboard"></i>
-    </span> Dashboard ->
+    </span>
     <span class="subtitle">Team Submission</span>
+    
   </h3>
 
   <nav aria-label="breadcrumb">
     <ul class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page">
-        <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-success align-middle"></i>
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
       </li>
     </ul>
   </nav>
@@ -61,11 +69,24 @@ $category = $_POST['team_category'];
   <div class="col-12 grid-margin">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Recent Tickets</h4>
-        <div class="table-responsive">
-          <table class="table team_table">
+<?php 
+ if ($category !== '') {
+  $q_team = mysqli_query($conn, "SELECT DISTINCT tt.id AS team_id, tt.project_team_name AS project_name, tt.project_description, tt.category, tt.video_pitch, tt.log_book
+  FROM tbl_team tt WHERE category = '$category'");
+} else {
+  $q_team = mysqli_query($conn, "SELECT DISTINCT tt.id AS team_id, tt.project_team_name AS project_name, tt.project_description, tt.category, tt.video_pitch, tt.log_book
+  FROM tbl_team tt");
+}
 
-            <thead>
+$no_rows =mysqli_num_rows($q_team);
+
+
+?>
+        <h4 class="card-title">Total : <?php   echo $no_rows     ?></h4>
+        <div class="table-responsive">
+          <table class="table team_table table1">
+
+            <thead class="table-dark">
               <tr>
                 <th scope="col">Team Name</th>
                 <th scope="col">Team Description</th>
@@ -79,13 +100,7 @@ $category = $_POST['team_category'];
             <tbody>
 
             <?php
-            if ($category !== '') {
-              $q_team = mysqli_query($conn, "SELECT DISTINCT tt.id AS team_id, tt.project_team_name AS project_name, tt.project_description, tt.category, tt.video_pitch, tt.log_book
-              FROM tbl_team tt WHERE category = '$category'");
-            } else {
-              $q_team = mysqli_query($conn, "SELECT DISTINCT tt.id AS team_id, tt.project_team_name AS project_name, tt.project_description, tt.category, tt.video_pitch, tt.log_book
-              FROM tbl_team tt");
-            }
+           
 
             while ($r_team = mysqli_fetch_assoc($q_team)) {
               $youtube_id = '';
@@ -96,7 +111,10 @@ $category = $_POST['team_category'];
               }
 
               $team_id = $r_team['team_id'];
-              $team_m_q = mysqli_query($conn, "SELECT GROUP_CONCAT(student_first_name) AS members FROM tbl_team_member WHERE team_id = $team_id");
+              $team_m_q = mysqli_query($conn, "SELECT GROUP_CONCAT(s.student_first_name) AS members
+              FROM tbl_team_member tm
+              JOIN student s ON tm.student_id = s.student_id
+              WHERE tm.team_id = $team_id");
               $team_m_r = mysqli_fetch_assoc($team_m_q);
 
             ?>
@@ -122,10 +140,11 @@ $category = $_POST['team_category'];
                 } else {
                   echo '<td>LogBook</td>';
                 }
+                $encode_team_id = base64_encode($team_id)
                 ?>
 
                 <td><?php echo $team_m_r["members"]; ?></td>
-                <td><a href="edit_team.php?team_id=<?php echo $team_id; ?>"><button type="button" style="margin:0px;" class="btn btn-gradient-success btn-sm" onclick="edit(this)">Update Details</button></a></td>
+                <td><a href="edit_team.php?team_id=<?php echo $encode_team_id; ?>"><button type="button" style="margin:0px!important; font-size:small;" class="btn btn-gradient-success btn-sm " >Update</button></a></td>
               </tr>
 
             <?php
@@ -162,6 +181,8 @@ $category = $_POST['team_category'];
 <!-- Plugin js for this page -->
 
 <script src="../assets/js/jquery.cookie.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
 <!-- End plugin js for this page -->
 <!-- inject:js -->
 <script src="../assets/js/off-canvas.js"></script>

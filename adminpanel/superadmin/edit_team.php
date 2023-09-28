@@ -5,7 +5,7 @@ session_start();
 $type = 'Judge';
 $id = $_SESSION['id'];
 
-$team_id = $_GET['team_id'];
+$team_id = base64_decode($_GET['team_id']);
 
 $q_vt = mysqli_query($conn,"select distinct tt.id as team_id,tt.project_team_name as project_name,tt.project_description,tu.first_name, tu.last_name,tt.video_pitch, tt.log_book,tu.email 
 from tbl_team tt, tbl_team_mentor ttm, tbl_user tu
@@ -17,7 +17,12 @@ $d_vt = mysqli_fetch_assoc($q_vt);
 
 $url = $d_vt['video_pitch'];
 preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match);
-$youtube_id = $match[1];
+if (!empty($match) && isset($match[1])) {
+    $youtube_id = $match[1];
+} else {
+    // Handle the case when the YouTube ID is not found or URL is not present.
+    $youtube_id = null; // You can set a default value or take appropriate action.
+}
 
 
 
@@ -33,6 +38,7 @@ $youtube_id = $match[1];
     <title>Purple Admin</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
@@ -160,7 +166,13 @@ $youtube_id = $match[1];
                         </span> Dashboard ->
                         <span class="subtitle">Team Editing</span>
                     </h3>
-
+                    <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
+      </li>
+    </ul>
+  </nav>
                    
                 </div>
                 <div class="my-3 mt-5" style="
@@ -249,7 +261,10 @@ $youtube_id = $match[1];
                                                         <td>
 
                                                             <?php
-                                                            $team_m_q = mysqli_query($conn, "select * from tbl_team_member where team_id = $team_id");
+                                                            $team_m_q = mysqli_query($conn, "SELECT *
+                                                            FROM tbl_team_member tm
+                                                            JOIN student s ON tm.student_id = s.student_id
+                                                            WHERE tm.team_id = $team_id ");
                                                             while ($team_m_r = mysqli_fetch_assoc($team_m_q)) {
                                                             ?>
 
@@ -286,7 +301,10 @@ $youtube_id = $match[1];
 
                                         <form method="post"   enctype="multipart/form-data">
 
-                                            <?php $team_m_q = mysqli_query($conn, "select * from tbl_team_member where team_id = $team_id");
+                                            <?php $team_m_q = mysqli_query($conn, "SELECT *
+                        FROM tbl_team_member tm
+                        JOIN student s ON tm.student_id = s.student_id
+                        WHERE tm.team_id = $team_id ");
                                             while ($team_m_r = mysqli_fetch_assoc($team_m_q)) {  ?>
 
 
@@ -296,11 +314,11 @@ $youtube_id = $match[1];
                                                         <?php echo $team_m_r['student_first_name'] . ' ' . $team_m_r['student_last_name']; ?>
                                                         <div>
 
-                                                            <label class="m-3"="pwd"><b>Parent has given consent to photograph the student:</b></label>
-                                                            <input class="m-3" type="radio" name="photo_consent_<?php echo $team_m_r['id']; ?>" value="Yes" onchange="return func(this.value,<?php echo $team_m_r['id']; ?>,'photo_consent')" <?php if (($team_m_r['photo_consent']) == 1) {
+                                                            <label class="m-3"><b>Parent has given consent to photograph the student:</b></label>
+                                                            <input class="m-3" type="radio" name="photo_consent_<?php echo $team_m_r['student_id']; ?>" value="Yes" onchange="return func(this.value,<?php echo $team_m_r['student_id']; ?>,'photo_consent')" <?php if (($team_m_r['photo_consent']) == 1) {
                                                                                                                                                                                                             echo 'Checked';
                                                                                                                                                                                                         } ?>>Yes
-                                                            <input class="m-3" type="radio" name="photo_consent_<?php echo $team_m_r['id']; ?>" value="No" id="fileUpload" onchange="return func(this.value,<?php echo $team_m_r['id']; ?>,'photo_consent')" <?php if (($team_m_r['photo_consent']) == 0) {
+                                                            <input class="m-3" type="radio" name="photo_consent_<?php echo $team_m_r['student_id']; ?>" value="No" id="fileUpload" onchange="return func(this.value,<?php echo $team_m_r['student_id']; ?>,'photo_consent')" <?php if (($team_m_r['photo_consent']) == 0) {
                                                                                                                                                                                                                             echo 'Checked';
                                                                                                                                                                                                                         } ?>>No
                                                         </div>
@@ -312,9 +330,9 @@ $youtube_id = $match[1];
                                                         <div>
                                                             <label for="pwd"><b>Photo Consent Form for <?php echo $team_m_r['student_first_name'] ?>:</b></label>
                                                             <?php if (($team_m_r['photo_consent_form']) != '') { ?>
-                                                                <a  class="text-dark"   href="http://grading.emuem.org/Team/<?php echo $team_m_r['photo_consent_form'] ?>" target="_blank">Consent Form</a>
+                                                                <a  class="text-dark"   href="<?php echo $team_m_r['photo_consent_form'] ?>" target="_blank">Consent Form</a>
                                                             <?php } ?>
-                                                            <input type="file" class="form-control form-control-md" name="photo_form" id="photo_form" placeholder="Upload Photo Consent Form" onchange="func(this.value,<?php echo $team_m_r['id']; ?>,'photo_consent_form')">
+                                                            <input type="file" class="form-control form-control-md" name="photo_form_<?php echo $team_m_r['student_id']; ?>" id="photo_form_<?php echo $team_m_r['student_id']; ?>" placeholder="Upload Photo Consent Form" onchange="func(this.value,<?php echo $team_m_r['student_id']; ?>,'photo_consent_form')">
                                                         </div>
 
                                                     </td>
@@ -353,9 +371,9 @@ $youtube_id = $match[1];
 
                             <?php if ($youtube_id == '') { ?>
                                 <div class="form-group">
-                                    <video  controls style="width:50%!important; height:50%!important;">
-                                        <source src="<?php echo '../Team/' . $video_pitch ?>" type="video/mp4">
-                                        <source src="<?php echo '../Team/' . $video_pitch ?>" type="video/ogg">
+                                    <video  controls style="width:100%!important; height:100%!important;">
+                                        <source src="<?php echo  $url ?>" type="video/mp4">
+                                        <source src="<?php echo  $url ?>" type="video/ogg">
                                     </video>
                                 </div>
                             <?php } else { ?>
@@ -382,7 +400,7 @@ $youtube_id = $match[1];
 				
 				
 				<form method="post"  id="edit_team" enctype="multipart/form-data" >
-                <input  type="hidden" class="form-control" name="team_id" placeholder="Upload video" value="<?php echo $_GET['team_id'] ?>">
+                <input  type="hidden" class="form-control" name="team_id" placeholder="Upload video" value="<?php echo $team_id ?>">
 							
                 
 				<tr>
@@ -410,7 +428,7 @@ $youtube_id = $match[1];
                         
                           <div >
                             <label class="m-3" for="pwd"><b>LogBook:</b></label>
-                            <input type="file" class="form-control" id="studentEmail" name="log_book"placeholder="Upload logbook">
+                            <input type="file" class="form-control" id="log_book" name="log_book" placeholder="Upload logbook">
                         </div>
                         
                     </td>
@@ -450,7 +468,7 @@ $youtube_id = $match[1];
         </div>
     </div>
 
-    <script>
+    <script >
    
   
    
@@ -486,7 +504,7 @@ $youtube_id = $match[1];
        {
            //alert(value);
            
-           var input = document.getElementById("photo_form");
+           var input = document.getElementById("photo_form_"+Id);
                
                  //alert('hi');
                  file = input.files[0];
@@ -496,7 +514,7 @@ $youtube_id = $match[1];
                    if(!!file.type.match(/pdf.*/)){
                    //alert('inside if');
                      formData.append("photo_form", file);
-                     formData.append("id", Id);
+                     formData.append("student_id", Id);
                      $.ajax({
                        url: "api.php?action=photo_consent_form",
                        type: "POST",
@@ -508,6 +526,7 @@ $youtube_id = $match[1];
                            if (resp.status == "Success") {
                             // location.reload();
                             alert(resp.msg);
+                            window.location.reload();
            } else if(resp.status == "Failed") {
              
             alert(resp.message);
@@ -540,16 +559,17 @@ $youtube_id = $match[1];
     <!-- Plugin js for this page -->
 
     <script src="../assets/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="../assets/js/off-canvas.js"></script>
     <script src="../assets/js/hoverable-collapse.js"></script>
-    <!-- <script src="../assets/js/misc.js"></script> -->
+    <script src="../assets/js/misc.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="../assets/js/dashboard.js"></script>
     <script src="../assets/js/todolist.js"></script>
-    <script src="../assets/js/ajaxscript.js" type="text/javascript"></script>
+    <script src="../assets/js/ajaxscript.js?v=2" type="text/javascript"></script>
     <!-- End custom js for this page -->
 </body>
 

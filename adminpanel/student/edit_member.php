@@ -242,6 +242,8 @@ if (isset($_GET['student_id'])) {
 
             <?php include '../dashboardheader.php'; ?>
             <!-- partial -->
+            
+       
 
             <div class="my-3 my-3" style="
                  
@@ -281,14 +283,26 @@ if (isset($_GET['student_id'])) {
                     $youtube_id = null; // You can set a default value or take appropriate action.
                 }    ?>
                 <div class="container d-flex justify-content-center col-md-10 px-5">
+               
                     <div class="col-9">
+                    <div class=" justify-content-end d-flex ">
+          
+          <nav aria-label="breadcrumb">
+      <ul class="breadcrumb border-0">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
+          </li>
+        </ul>
+       </nav>
+    
 
+        </div>
 
                         <form id="edit_members" enctype="multipart/form-data">
-                            <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                            <br>
+                        <div style="display: none;">    <input type="hidden" name="student_id" value="<?php echo $student_id ?>"></div>
+                            
                             <h3> Student Details:</h3>
-                            <br>
+                          
 
                             <table class="table table-borderless">
 
@@ -451,7 +465,7 @@ if (isset($_GET['student_id'])) {
                                             <label for="pwd">Attach your photo consent form:</label>
                                             <p><a class="nav-link" href="Photo-video waiver form1.pdf" target="_blank">Download the original Photo Consent Form to sign and upload</a></p>
                                             <?php if (($r['photo_consent_form']) != '') { ?>
-                                                <p><a href="../superadmin/test_upload/<?php echo $r['photo_consent_form'] ?>" target="_blank">Uploaded Consent Form - <?php echo $r['photo_consent_form'] ?></a></p>
+                                                <p><a href="<?php echo $r['photo_consent_form'] ?>" target="_blank">Uploaded Consent Form - <?php echo $r['photo_consent_form'] ?></a></p>
                                             <?php } ?>
                                             <input type="file" class="form-control" id="studentEmail" name="log_book" placeholder="Upload photo consent form">
                                         </div>

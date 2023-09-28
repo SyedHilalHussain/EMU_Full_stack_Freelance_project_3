@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-$id = $_POST['query'];
+$id = $_GET['id'];
 
 $q = mysqli_query($conn, "select * from tbl_user where id = $id");
 $r = mysqli_fetch_assoc($q);
@@ -10,12 +10,13 @@ $r = mysqli_fetch_assoc($q);
 echo '
 <div class="page-header">
 <h2 >Judge Profile</h2>
- <!-- <nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Profile</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Basic Information</li>
-  </ol> --!>
-</nav>
+<nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.location.href = "/grading.php/" ;">Back</button>
+      </li>
+    </ul>
+  </nav>
 </div>
 <div class="row justify-content-center">
     <div class="col-md-6 grid-margin stretch-card">

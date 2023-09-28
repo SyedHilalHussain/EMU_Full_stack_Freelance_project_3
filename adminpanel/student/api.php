@@ -54,31 +54,31 @@ class API extends DBConnection
     {
 
 
-                $year = date("Y");
-                $team_id = $_POST['team_id'];
-                $content = '';
-                $mentor_id = $_POST['mentorid'];
-                $student_id = $_POST['studentid'];
-                $grade_query = $this->conn->query( "select * from student where student_id='$student_id'");
-$grade_row = $grade_query->fetch_assoc();
-$grade = $grade_row['student_grade'];
-if ($grade > 2 && $grade < 6) {
-    $category = '3-5';
-} elseif ($grade > 5 && $grade < 9) {
-    $category = '6-8';
-} elseif ($grade > 8 && $grade < 13) {
-    $category = '9-12';
-} else {
-    $category = 'K-2';
-}
-                $team_q = $this->conn->query("select * from tbl_team where id = $team_id");
-                $no_of_rows = $team_q->num_rows;
-                if ($no_of_rows > 0) {
-                    $row = $team_q->fetch_assoc();
-                    $content .= '<h3>Project Details</h3>';
-                    $content .= ' <form method="post" enctype="multipart/form-data">';
-                
-                                $content .= ' <tr>
+        $year = date("Y");
+        $team_id = $_POST['team_id'];
+        $content = '';
+        $mentor_id = $_POST['mentorid'];
+        $student_id = $_POST['studentid'];
+        $grade_query = $this->conn->query("select * from student where student_id='$student_id'");
+        $grade_row = $grade_query->fetch_assoc();
+        $grade = $grade_row['student_grade'];
+        if ($grade > 2 && $grade < 6) {
+            $category = '3-5';
+        } elseif ($grade > 5 && $grade < 9) {
+            $category = '6-8';
+        } elseif ($grade > 8 && $grade < 13) {
+            $category = '9-12';
+        } else {
+            $category = 'K-2';
+        }
+        $team_q = $this->conn->query("select * from tbl_team where id = $team_id");
+        $no_of_rows = $team_q->num_rows;
+        if ($no_of_rows > 0) {
+            $row = $team_q->fetch_assoc();
+            $content .= '<h3>Project Details</h3>';
+            $content .= ' <form method="post" enctype="multipart/form-data">';
+
+            $content .= ' <tr>
                         <td colspan="6">
                 
                             <div>
@@ -128,20 +128,20 @@ if ($grade > 2 && $grade < 6) {
                     <tr>
                         <div>
                             <label for="studentType">Students List:</label>';
-                               
-                            
-                                $content .= '<select name="student_id[]" class="form-control" multiple="multiple"><option disabled>Select the Team Members</option>';
-                                if(isset($_SESSION['name']) && isset($_SESSION['id'])){
-                                    $content .= '<option value='.$_SESSION['id'].' selected>'.$_SESSION['name'].'</option>';
-                                $id=$_SESSION['id'];
-                                }
-                                            $q_m = $this->conn->query("SELECT tbl_student_mentor.student_id as id, tbl_user.first_name, tbl_user.last_name
+
+
+            $content .= '<select name="student_id[]" class="form-select" multiple="multiple"><option disabled>Select the Team Members</option>';
+            // if(isset($_SESSION['name']) && isset($_SESSION['id'])){
+            //     $content .= '<option value='.$_SESSION['id'].' selected>'.$_SESSION['name'].'</option>';
+            // $id=$_SESSION['id'];
+            // }
+            $q_m = $this->conn->query("SELECT tbl_student_mentor.student_id as id, tbl_user.first_name, tbl_user.last_name
                                             FROM tbl_user
                                             JOIN tbl_student_mentor ON tbl_user.id = tbl_student_mentor.student_id
-                                            JOIN tbl_team_member ON tbl_student_mentor.student_id = tbl_team_member.student_id
+                                            
                                             JOIN student ON tbl_student_mentor.student_id = student.student_id
                                             WHERE tbl_student_mentor.mentor_id = $mentor_id
-                                              AND tbl_team_member.student_id != $id
+                                             AND student.student_id NOT IN ( SELECT student_id FROM tbl_team_member WHERE team_id = '$team_id') 
                                               AND
                                               (
                                         (CASE 
@@ -151,50 +151,50 @@ if ($grade > 2 && $grade < 6) {
                                           ELSE 'K-2'
                                         END) = '$category'
                                       );  ");
-                                    while ($r_m = $q_m->fetch_assoc()) {
-                                
-                                    $content .= '<option value="'. $r_m['id'] . '">' . $r_m['first_name'] . ' ' . $r_m['last_name'] . '</option>';
-                                    }
-                                    $content .= '</select></div></tr><br> 
+            while ($r_m = $q_m->fetch_assoc()) {
+
+                $content .= '<option value="' . $r_m['id'] . '">' . $r_m['first_name'] . ' ' . $r_m['last_name'] . '</option>';
+            }
+            $content .= '</select></div></tr><div style="color:red; ">Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</div> 
+                                    <br> 
                                     <div>
                                     <label for="studentType">Current Team members:</label> ';
-                                    
-                                    
-                                    $q_m_s = $this->conn->query("SELECT *
+
+
+            $q_m_s = $this->conn->query("SELECT *
                                     FROM tbl_team_member tm
                                     JOIN student s ON tm.student_id = s.student_id
                                     WHERE tm.team_id = $team_id AND s.deleted = 0;");
-                                    $count = $q_m_s->num_rows;
-                                    if ($count > 0) {
-                                    
-                                        $content .=  '<select class="form-control" multiple readonly>';
-                                            
-                                            while ($r_m_s = $q_m_s->fetch_assoc()) {
+            $count = $q_m_s->num_rows;
+            if ($count > 0) {
 
-                                                $content .= '<option value="'.$r_m_s['id'].'" selected>'.$r_m_s['student_first_name'] . ' ' . $r_m_s['student_last_name'] .'</option>';
-    
-                                             } 
-                                            $content .=  '</select>';
-                                     } 
-                                     $content .= '</div>';
-                                
-                                        $content .= '<div class="form-group"><input type="hidden" class="form-control"  name="team_id" placeholder="Team Name" value="' . $team_id . '" />
+                $content .=  '<select class="form-select" multiple readonly>';
+
+                while ($r_m_s = $q_m_s->fetch_assoc()) {
+
+                    $content .= '<option value="' . $r_m_s['id'] . '" disabled>' . $r_m_s['student_first_name'] . ' ' . $r_m_s['student_last_name'] . '</option>';
+                }
+                $content .=  '</select>';
+            }
+            $content .= '</div>';
+
+            $content .= '<div class="form-group"><input type="hidden" class="form-control"  name="team_id" placeholder="Team Name" value="' . $team_id . '" />
                                         </div></td></tr>';
-                                
-                                    $content .= ' <tr align="center">
+
+            $content .= ' <tr align="center">
                                 
                                     <td><div class="form-group"> <input type="submit" class="btn btn-success" name="submit_update" value="submit" />';
-                                    $content .= '</form>';
-                                
-                            
-                                return $content;
-                } else {
-                
-                    $content .= '<h3>Project Details</h3>';
-                    $content .= ' <form method="post" enctype="multipart/form-data">';
-             
-                
-                    $content .= ' <tr>
+            $content .= '</form>';
+
+
+            return $content;
+        } else {
+
+            $content .= '<h3>Project Details</h3>';
+            $content .= ' <form method="post" enctype="multipart/form-data">';
+
+
+            $content .= ' <tr>
                 <td colspan="6">
                 
                     <div>
@@ -236,7 +236,7 @@ if ($grade > 2 && $grade < 6) {
                 
                     <div>
                         <label for="studentType">Team Category:</label>
-                        <input type="text" class="form-control" name="category" required placeholder="Category" value="'.$category.'" required>
+                        <input type="text" class="form-control" name="category" required placeholder="Category" value="' . $category . '" required>
                     
                     </div>
                 
@@ -246,20 +246,20 @@ if ($grade > 2 && $grade < 6) {
             <tr>
                 <div>
                     <label for="studentType">Students List:</label>';
-                
-                
+
+
             $content .= '<select name="student_id[]" class="form-control" multiple="multiple"><option disabled>Select the Team Members</option>';
-if(isset($_SESSION['name']) && isset($_SESSION['id'])){
-    $content .= '<option value='.$_SESSION['id'].' selected>'.$_SESSION['name'].'</option>';
-$id=$_SESSION['id'];
-}
+            if (isset($_SESSION['name']) && isset($_SESSION['id'])) {
+                $content .= '<option value=' . $_SESSION['id'] . ' selected>' . $_SESSION['name'] . '</option>';
+                $id = $_SESSION['id'];
+            }
             $q_m = $this->conn->query("SELECT tbl_student_mentor.student_id as id, tbl_user.first_name, tbl_user.last_name
             FROM tbl_user
             JOIN tbl_student_mentor ON tbl_user.id = tbl_student_mentor.student_id
-            JOIN tbl_team_member ON tbl_student_mentor.student_id = tbl_team_member.student_id
+            
             JOIN student ON tbl_student_mentor.student_id = student.student_id
             WHERE tbl_student_mentor.mentor_id = $mentor_id
-              AND tbl_team_member.student_id != $id
+              AND student.student_id != $id
               AND
               (
                 (CASE 
@@ -273,34 +273,35 @@ $id=$_SESSION['id'];
 
                 $content .= '<option value="' . $r_m['id'] . '">' . $r_m['first_name'] . ' ' . $r_m['last_name'] . '</option>';
             }
-                $content .= '</select></div> 
+            $content .= '</select></div> 
                  <div style="color:red; ">Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</div> 
                  <br><div class="form-group">';
 
-          
-                $content .= ' <button type="submit" class="btn btn-success" name="submit_team">Create</button>
+
+            $content .= ' <button type="submit" class="btn btn-success" name="submit_team">Create</button>
                 </div>
                 </form>';
-            }
+        }
 
-            return $content;
+        return $content;
     }
-    function edit_member(){
+    function edit_member()
+    {
 
 
         extract($_POST);
-        $first_name=$_POST['first_name'];
-        $last_name=$_POST['last_name'];
-        $student_grade=$_POST['student_grade'];
-        $student_school_name=$_POST['student_school_name'];
-        $student_school_district=$_POST['student_school_district'];
-        $student_tshirt=$_POST['student_tshirt'];
-        $photo_consent=$_POST['photo_consent'];
-        $video_exp_link=$_POST['video_exp_link'];
-        $student_id=$_POST['student_id'];
-        
-       
-            $q = "UPDATE student SET
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $student_grade = $_POST['student_grade'];
+        $student_school_name = $_POST['student_school_name'];
+        $student_school_district = $_POST['student_school_district'];
+        $student_tshirt = $_POST['student_tshirt'];
+        $photo_consent = $_POST['photo_consent'];
+        $video_exp_link = $_POST['video_exp_link'];
+        $student_id = $_POST['student_id'];
+
+
+        $q = "UPDATE student SET
                     student_first_name = '$first_name',
                     student_last_name = '$last_name',
                     student_grade = '$student_grade',
@@ -310,149 +311,146 @@ $id=$_SESSION['id'];
                     photo_consent = '$photo_consent',
                     video_exp_link = '$video_exp_link'
                 WHERE student_id = $student_id";
-            
-            if($this->conn->query($q)){
-                $resp['status'] = 'Success';
-                $message = "Profile Updated Successfully!\n";
-            }else{
-                $resp['status'] = 'Failed';
-                $message = "Failed to Updated Profile !\n";
-            }
-    
-            if ($_FILES['fileToUpload']['size'] > 0) {
-                $maxsize = 5242880; // 5MB
-                $name = $_FILES['fileToUpload']['name'];
-                $filenewname = rand(99999, 1000000) . "-" . $name;
-                $target_dir = "./test_upload/";
-                $target_file = $target_dir . $filenewname;
-                $extension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-                $extensions_arr = array("mp4", "avi", "3gp", "mov", "mpeg");
-    
-                if (in_array($extension, $extensions_arr)) {
-                    if ($_FILES['fileToUpload']['size'] < $maxsize && $_FILES["fileToUpload"]["size"] != 0) {
-                        if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $target_file)) {
-                            $query = "UPDATE student SET video_exp_link = '$target_file' WHERE id = $student_id";
-                            $this->conn->query($query);
-                            $resp['status'] = 'Success';
-                            $message .= "File Uploaded Successfully!\n"; }
-                    } else {
-                        $resp['status'] = 'Failed';
-                        $message .= "File too large. File must be less than 5MB.\n";
-                       }
+
+        if ($this->conn->query($q)) {
+            $resp['status'] = 'Success';
+            $message = "Profile Updated Successfully!\n";
+        } else {
+            $resp['status'] = 'Failed';
+            $message = "Failed to Updated Profile !\n";
+        }
+
+        if ($_FILES['fileToUpload']['size'] > 0) {
+            $maxsize = 5242880; // 5MB
+            $name = $_FILES['fileToUpload']['name'];
+            $filenewname = rand(99999, 1000000) . "-" . $name;
+            $target_dir = "./test_upload/";
+            $target_file = $target_dir . $filenewname;
+            $extension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            $extensions_arr = array("mp4", "avi", "3gp", "mov", "mpeg");
+
+            if (in_array($extension, $extensions_arr)) {
+                if ($_FILES['fileToUpload']['size'] < $maxsize && $_FILES["fileToUpload"]["size"] != 0) {
+                    if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $target_file)) {
+                        $query = "UPDATE student SET video_exp_link = '$target_file' WHERE student_id = $student_id";
+                        $this->conn->query($query);
+                        $resp['status'] = 'Success';
+                        $message .= "File Uploaded Successfully!\n";
+                    }
                 } else {
                     $resp['status'] = 'Failed';
-                    $message .= "Invalid file extension.\n";
-                    
-                  }
-            } 
-        
-    
+                    $message .= "File too large. File must be less than 5MB.\n";
+                }
+            } else {
+                $resp['status'] = 'Failed';
+                $message .= "Invalid file extension.\n";
+            }
+        }
+
+
         if ($_FILES['log_book']['size'] > 0) {
-            $target_dir = "../superadmin/test_upload/";
+            $target_dir = "test_upload/";
             $name = $_FILES["log_book"]["name"];
             $filenewname = rand(99999, 1000000) . "-" . $name;
             $target_file = $target_dir . $filenewname;
             $doc_path = $_FILES['log_book']['name'];
-    
+
             if (move_uploaded_file($_FILES['log_book']['tmp_name'], $target_file)) {
-               if( $this->conn->query("UPDATE student SET photo_consent_form='$filenewname' WHERE id = $student_id")           ){
-                $message .= "Consent Form Uploaded Successfully\n";
-               }
+                if ($this->conn->query("UPDATE student SET photo_consent_form='$target_file' WHERE student_id = $student_id")) {
+                    $message .= "Consent Form Uploaded Successfully\n";
+                }
             } else {
                 $resp['status'] = 'Failed';
                 $message .= "Failed to Upload a consent Form\n";
-               
             }
         }
-    
+
         $resp['msg'] = $message;
         $resp['error'] = $this->conn->error;
-    
+
         return json_encode($resp);
     }
-    function create_member(){
+    function create_member()
+    {
 
 
         extract($_POST);
-        $first_name=$_POST['first_name'];
-        $last_name=$_POST['last_name'];
-        $student_grade=$_POST['student_grade'];
-        $student_school_name=$_POST['student_school_name'];
-        $student_school_district=$_POST['student_school_district'];
-        $student_tshirt=$_POST['student_tshirt'];
-        $photo_consent=$_POST['photo_consent'];
-        $video_exp_link=$_POST['video_exp_link'];
-        $student_id=$_POST['student_id'];
-        
-       
-            $q = "INSERT into  student 
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $student_grade = $_POST['student_grade'];
+        $student_school_name = $_POST['student_school_name'];
+        $student_school_district = $_POST['student_school_district'];
+        $student_tshirt = $_POST['student_tshirt'];
+        $photo_consent = $_POST['photo_consent'];
+        $video_exp_link = $_POST['video_exp_link'];
+        $student_id = $_POST['student_id'];
+
+
+        $q = "INSERT into  student 
                     (student_id, student_first_name  ,student_last_name ,student_grade  ,student_school_name  ,student_school_district  ,t_shirt_size  ,photo_consent  ,video_exp_link )
                     VALUES('$student_id','$first_name','$last_name','$student_grade','$student_school_name','$student_school_district','$student_tshirt','$photo_consent','$video_exp_link') ";
-               
-            
-            if($this->conn->query($q)){
-                $resp['status'] = 'Success';
-                $message = "Profile Created Successfully!\n";
-            }else{
-                $resp['status'] = 'Failed';
-                $message = "Failed to Create Profile !\n";
-            }
-    
-            if ($_FILES['fileToUpload']['size'] > 0) {
-                $maxsize = 5242880; // 5MB
-                $name = $_FILES['fileToUpload']['name'];
-                $filenewname = rand(99999, 1000000) . "-" . $name;
-                $target_dir = "./test_upload/";
-                $target_file = $target_dir . $filenewname;
-                $extension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-                $extensions_arr = array("mp4", "avi", "3gp", "mov", "mpeg");
-    
-                if (in_array($extension, $extensions_arr)) {
-                    if ($_FILES['fileToUpload']['size'] < $maxsize && $_FILES["fileToUpload"]["size"] != 0) {
-                        if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $target_file)) {
-                            $query = "INSERT INTO student (video_exp_link) VALUES('$target_file') ";
-                            $this->conn->query($query);
-                            $resp['status'] = 'Success';
-                            $message .= "File Uploaded Successfully!\n"; }
-                    } else {
-                        $resp['status'] = 'Failed';
-                        $message .= "File too large. File must be less than 5MB.\n";
-                       }
+
+
+        if ($this->conn->query($q)) {
+            $resp['status'] = 'Success';
+            $message = "Profile Created Successfully!\n";
+        } else {
+            $resp['status'] = 'Failed';
+            $message = "Failed to Create Profile !\n";
+        }
+
+        if ($_FILES['fileToUpload']['size'] > 0) {
+            $maxsize = 5242880; // 5MB
+            $name = $_FILES['fileToUpload']['name'];
+            $filenewname = rand(99999, 1000000) . "-" . $name;
+            $target_dir = "./test_upload/";
+            $target_file = $target_dir . $filenewname;
+            $extension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            $extensions_arr = array("mp4", "avi", "3gp", "mov", "mpeg");
+
+            if (in_array($extension, $extensions_arr)) {
+                if ($_FILES['fileToUpload']['size'] < $maxsize && $_FILES["fileToUpload"]["size"] != 0) {
+                    if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $target_file)) {
+                        $query = "INSERT INTO student (video_exp_link) VALUES('$target_file') ";
+                        $this->conn->query($query);
+                        $resp['status'] = 'Success';
+                        $message .= "File Uploaded Successfully!\n";
+                    }
                 } else {
                     $resp['status'] = 'Failed';
-                    $message .= "Invalid file extension.\n";
-                    
-                  }
-            } 
-        
-    
+                    $message .= "File too large. File must be less than 5MB.\n";
+                }
+            } else {
+                $resp['status'] = 'Failed';
+                $message .= "Invalid file extension.\n";
+            }
+        }
+
+
         if ($_FILES['log_book']['size'] > 0) {
             $target_dir = "../superadmin/test_upload/";
             $name = $_FILES["log_book"]["name"];
             $filenewname = rand(99999, 1000000) . "-" . $name;
             $target_file = $target_dir . $filenewname;
             $doc_path = $_FILES['log_book']['name'];
-    
+
             if (move_uploaded_file($_FILES['log_book']['tmp_name'], $target_file)) {
-               if( $this->conn->query("INSERT INTO student (photo_consent_form) VALUES('$filenewname')")  ){
-                $message .= "Consent Form Uploaded Successfully\n";
-               }
+                if ($this->conn->query("INSERT INTO student (photo_consent_form) VALUES('$filenewname')")) {
+                    $message .= "Consent Form Uploaded Successfully\n";
+                }
             } else {
                 $resp['status'] = 'Failed';
                 $message .= "Failed to Upload a consent Form\n";
-               
             }
         }
-    
+
         $resp['msg'] = $message;
         $resp['error'] = $this->conn->error;
-    
+
         return json_encode($resp);
     }
-
-
     
-    }
+}
 
 
 

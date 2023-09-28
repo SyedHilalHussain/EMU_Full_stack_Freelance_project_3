@@ -1,8 +1,11 @@
-<?php 
+<?php
+
+
+
 include 'config.php';
 $category='';
 if (isset($_GET['query']) && isset($_GET['title'])){
-    $query=$_GET['query'];
+    $sql_get_query=$_GET['query'];
     $title=$_GET['title'];
 
 
@@ -18,6 +21,8 @@ if (isset($_GET['query']) && isset($_GET['title'])){
     <!-- plugins:css -->
     <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+   
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -43,14 +48,17 @@ if (isset($_GET['query']) && isset($_GET['title'])){
     <span class="page-title-icon text-white me-2">
       <i class="mdi mdi-view-dashboard"></i>
     </span> Dashboard ->
-    <span class="subtitle"><?php echo $title; ?></span>
+    <span class="subtitle"><?php 
+    echo $title; 
+  
+    ?></span>
   </h3>
 
   <nav aria-label="breadcrumb">
     <ul class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page">
-        <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-success align-middle"></i>
-      </li>
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.location.href = 'grading.php' ;">Back</button>
+   </li>
     </ul>
   </nav>
 </div>
@@ -58,23 +66,28 @@ if (isset($_GET['query']) && isset($_GET['title'])){
   <div class="col-12 grid-margin">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Recent Tickets</h4>
+      <?php 
+				$q_team = mysqli_query($conn,$sql_get_query);	
+        $num_row = mysqli_num_rows($q_team);
+        ?>
+        <h4 class="card-title">Total : <?php  echo $num_row   ?></h4>
         <div class="table-responsive">
-          <table class="table team_table">
+          <table class="table team_table table1">
 
-            <thead>
+            <thead class="bg-dark text-light  ">
               <tr>
+              <th scope="col">S.No</th>
                 <th scope="col">Team Name</th>
                 <th scope="col">Category</th>
                 <th scope="col">Scores</th>
                 <th scope="col">Status</th>
-                <th>View Details</th>
+                <th scope="col">View Details</th>
               </tr>
             </thead>
             <tbody>
 
             <?php 
-				$q_team = mysqli_query($conn,$query);	
+				$count = 1;	
 									
 				while ($r_team = mysqli_fetch_assoc($q_team))					
 				{
@@ -105,6 +118,7 @@ if (isset($_GET['query']) && isset($_GET['title'])){
 					
 
               <tr>
+              <td><?php echo $count ?></td>
                 <!--<td><a href="viewteams.php?team_id=<?php echo $r_team['team_id']; ?>"><?php echo $r_team['team_id']; ?></a></td>-->
                 <td><?php echo $r_team['project_name']; ?></td>
                 <td><?php echo $r_team['category']; ?></td>
@@ -114,7 +128,7 @@ if (isset($_GET['query']) && isset($_GET['title'])){
               </tr>
 
             <?php
-            } }
+           $count++; } }
             ?>
 
             </tbody>
@@ -144,6 +158,7 @@ if (isset($_GET['query']) && isset($_GET['title'])){
 <!-- Plugin js for this page -->
 
 <script src="../assets/js/jquery.cookie.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <!-- End plugin js for this page -->
 <!-- inject:js -->
 <script src="../assets/js/off-canvas.js"></script>

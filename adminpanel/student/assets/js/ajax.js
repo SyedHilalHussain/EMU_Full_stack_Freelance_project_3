@@ -247,5 +247,11 @@ error: (err) => {
   });
 });
 
+$("#team_year_change").on("change", function (e) {
+  var selectedYear = this.value;
+  if (selectedYear) {
+      window.location.href = "home_prev.php?previous_year=" + selectedYear;
+  }
 
+});
 });

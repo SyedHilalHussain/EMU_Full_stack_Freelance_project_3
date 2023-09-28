@@ -7,7 +7,7 @@ $id = $_SESSION['id'];
 $name = $_SESSION['name'];
 $mentor_id = $_SESSION['mentor_id'];
 
-$team_id = $_GET['team_id'];
+$team_id = base64_decode($_GET['team_id']);
 $grade_query = mysqli_query($conn, "select * from student where student_id='$id'");
 $grade_row = mysqli_fetch_assoc($grade_query);
 $grade = $grade_row['student_grade'];
@@ -39,12 +39,12 @@ if (!empty($match) && isset($match[1])) {
 
 extract($_POST);
 if (isset($_POST['submit_update'])) {
-    $team_id = $_GET['team_id'];
+   
 
     foreach ($_POST['student_id'] as $p) {
         //$q_u = mysqli_query($conn, "select * from tbl_user where id= $p");
         //$r_u = mysqli_fetch_assoc($q_u);
-        mysqli_query($conn, "update tbl_team_member set team_id = $team_id where student_id = $p");
+        mysqli_query($conn, "INSERT INTO tbl_team_member  (team_id ,student_id) values('$team_id', '$p')");
         #echo "update tbl_team_member set team_id = $team_id where student_id = $p";
     }
     echo "<script type='text/javascript'>window.location.href = 'home.php';</script>";
@@ -333,20 +333,21 @@ if (isset($_POST['submit_update'])) {
                                     $q_m = mysqli_query($conn, "SELECT tbl_student_mentor.student_id as id, tbl_user.first_name, tbl_user.last_name
                                     FROM tbl_user
                                     JOIN tbl_student_mentor ON tbl_user.id = tbl_student_mentor.student_id
-                                    
                                     JOIN student ON tbl_student_mentor.student_id = student.student_id
-                                    WHERE tbl_student_mentor.mentor_id = $mentor_id
-                                      AND student.student_id NOT IN ( SELECT student_id FROM tbl_team_member WHERE team_id = $team_id) 
-                                      
-                                      AND
-                                      (
-                                        (CASE 
-                                          WHEN student.student_grade >= 3 AND student.student_grade <= 5 THEN '3-5'
-                                          WHEN student.student_grade >= 6 AND student.student_grade <= 8 THEN '6-8'
-                                          WHEN student.student_grade >= 9 AND student.student_grade <= 12 THEN '9-12'
-                                          ELSE 'K-2'
-                                        END) = '$category'
-                                      );  ");
+                                    LEFT JOIN tbl_team_member ON tbl_student_mentor.student_id = tbl_team_member.student_id
+                                                              AND tbl_team_member.team_id = $team_id
+                                    WHERE tbl_student_mentor.mentor_id = 4
+                                    AND
+                                    (
+                                      (CASE 
+                                        WHEN student.student_grade >= 3 AND student.student_grade <= 5 THEN '3-5'
+                                        WHEN student.student_grade >= 6 AND student.student_grade <= 8 THEN '6-8'
+                                        WHEN student.student_grade >= 9 AND student.student_grade <= 12 THEN '9-12'
+                                        ELSE 'K-2'
+                                      END) = '3-5'
+                                    )
+                                    AND tbl_team_member.student_id IS NULL;
+                                    ");
                                     while ($r_m = mysqli_fetch_assoc($q_m)) {
                                     ?>
                                         <option value="<?php echo $r_m['id']; ?>"><?php echo $r_m['first_name'] . ' ' . $r_m['last_name'] ?></option>
@@ -366,11 +367,11 @@ if (isset($_POST['submit_update'])) {
                                 $count = mysqli_num_rows($q_m_s);
                                 if ($count > 0) {
                                 ?>
-                                    <select class="form-control" multiple readonly>
+                                    <select class="form-select" multiple readonly>
                                         <?php
                                         while ($r_m_s = mysqli_fetch_assoc($q_m_s)) {
                                         ?>
-                                            <option value="<?php echo $r_m_s['id']; ?>" selected><?php echo $r_m_s['student_first_name'] . ' ' . $r_m_s['student_last_name'] ?></option>
+                                            <option value="<?php echo $r_m_s['id']; ?>" disabled ><?php echo $r_m_s['student_first_name'] . ' ' . $r_m_s['student_last_name'] ?></option>
 
                                         <?php } ?>
                                     </select>

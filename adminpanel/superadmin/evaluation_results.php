@@ -43,10 +43,17 @@ $category = $_POST['team_category'];
   <h3 class="page-title">
     <span class="page-title-icon text-white me-2">
       <i class="mdi mdi-view-dashboard"></i>
-    </span> Dashboard ->
+    </span> 
     <span class="subtitle">Evaluation Result</span>
+    
   </h3>
-
+  <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
+      </li>
+    </ul>
+  </nav>
   <!-- <nav aria-label="breadcrumb">
     <ul class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page">
@@ -61,9 +68,9 @@ $category = $_POST['team_category'];
       <div class="card-body">
         <h4 class="card-title">Evaluation Result</h4>
         <div class="table-responsive">
-          <table class="table team_table">
+          <table class="table team_table table1">
 
-            <thead>
+            <thead class="table-dark">
               <tr>
                 <th scope="col">Team Name</th>
                 <th scope="col">Category</th>
@@ -113,7 +120,7 @@ $category = $_POST['team_category'];
                 <td><?php echo $r_team['category']; ?></td>
                 <td><?php echo $r_team['total']; ?></td>
                 <td><?php echo $status; ?></td>
-                <td><a href="#" class="ajaxupdated" data-url="view_evaluations.php" data-query="<?php echo $r_team['team_id']; ?>" data-title="View Evaluations of Teams"><button type="button" style="margin:0px;" class="btn-sm btn-gradient-success">View Evaluations</button></a></td>
+                <td><a href="#" class="ajaxupdated" data-url="view_evaluations.php" data-query="<?php echo $r_team['team_id']; ?>" data-title="View Evaluations of Teams"><button type="button" style="margin:0px; white-space:nowrap;" class="btn-sm btn-gradient-success">View Evaluations</button></a></td>
               </tr>
 
             <?php

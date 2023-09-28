@@ -13,16 +13,16 @@ echo '
 <h3 class="page-title">
   <span class="page-title-icon  text-white me-2">
     <i class="mdi mdi-view-dashboard"></i>
-  </span> Dashboard ->
+  </span>
   <span class="subtitle">'.$title.'</span>
 </h3>
 
 <nav aria-label="breadcrumb">
-  <ul class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">
-      <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-success align-middle"></i>
-    </li>
-  </ul>
+<ul class="breadcrumb">
+  <li class="breadcrumb-item active" aria-current="page">
+  <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="location.reload(); ">Back</button>
+  </li>
+</ul>
 </nav>
 </div>
 <div class="row">
@@ -112,8 +112,10 @@ echo '
             <td style="width: 40px;">' . $col_name_val . '</td>';
             $i=0;
         foreach ($array as $value) {
+          $encoded_team_id1 = base64_encode($team_id);
+          $encoded_judge_id1 = base64_encode($array_j[$i]);
             echo '<td style="width: 10px;">
-                    <a href="update_evaluation_team.php?judge_id=' . $array_j[$i] . '&team_id=' . $team_id . '">
+                    <a href="update_evaluation_team.php?judge_id=' . $encoded_judge_id1 . '&team_id=' . $encoded_team_id1 . '">
                         ' . $value . PHP_EOL . '
                     </a>
                 </td>';
@@ -127,8 +129,10 @@ echo '
         $qu_q = mysqli_query($conn, $q);
         
         while ($qu_d = mysqli_fetch_assoc($qu_q)) {
+          $encoded_team_id = base64_encode($team_id);
+          $encoded_judge_id = base64_encode($qu_d['user_id']);
             echo '<td style="width: 10px;">
-                    <a href="evaluate_team.php?judge_id=' . $qu_d['user_id'] . '&team_id=' . $team_id . '">
+                    <a href="update_evaluate_team.php?judge_id=' . $encoded_judge_id . '&team_id=' . $encoded_team_id . '">
                         Incomplete
                     </a>
                 </td>';

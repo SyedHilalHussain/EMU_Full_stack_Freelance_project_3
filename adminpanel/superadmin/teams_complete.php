@@ -18,7 +18,7 @@ echo '
 <nav aria-label="breadcrumb">
   <ul class="breadcrumb">
     <li class="breadcrumb-item active" aria-current="page">
-      <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-success align-middle"></i>
+    <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="location.reload();">Back</button>
     </li>
   </ul>
 </nav>
@@ -29,17 +29,17 @@ echo '
   <div class="card-body">
     <h4 class="card-title">Recent Tickets</h4>
     <div class="table-responsive">
-      <table class="table team_table">
+      <table class="table team_table table1">
      
-        <thead>
+        <thead class="table-dark">
         <tr>
-        <th scope="col">Team Name</th>
-        <th scope="col">Team Description</th>
-        <th scope="col">Category</th>
-        <th scope="col">Video Pitch</th>
-        <th scope="col">LogBook</th>
-        <th scope="col">Team Members</th>
-        <th> View Details</th>
+        <th style="white-space:nowrap; font-size:medium;" scope="col">Team Name</th>
+        <th style="white-space:nowrap; font-size:medium;" scope="col">Team Description</th>
+        <th style="white-space:nowrap; font-size:medium;" scope="col">Category</th>
+        <th style="white-space:nowrap; font-size:medium;" scope="col">Video Pitch</th>
+        <th style="white-space:nowrap; font-size:medium;" scope="col">LogBook</th>
+        <th style="white-space:nowrap; font-size:medium;" scope="col">Team Members</th>
+        <th style="white-space:nowrap; font-size:medium;"> View Details</th>
     </tr>
         </thead>
         <tbody>';
@@ -64,7 +64,10 @@ echo '
                 $youtube_id = $match[1];
             }
             $team_id = $r_team['team_id'];
-        $team_m_q = mysqli_query($conn, "select GROUP_CONCAT(student_first_name) as members from tbl_team_member where team_id = $team_id");
+        $team_m_q = mysqli_query($conn, "SELECT GROUP_CONCAT(s.student_first_name) AS members
+        FROM tbl_team_member tm
+        JOIN student s ON tm.student_id = s.student_id
+        WHERE tm.team_id = $team_id");
         $team_m_r = mysqli_fetch_assoc($team_m_q);
 				
 				
@@ -93,8 +96,9 @@ echo '
                } else {
                     echo ' <td>LogBook</td>';  
              }
+             $encoded_team_id = base64_encode($team_id);
           echo '<td>'.$team_m_r["members"].'</td>  
-          <td><a href="edit_team.php?team_id='.$team_id.'"><button type="button" style="margin:0px;"  class="btn btn-gradient-success btn-sm"  onclick="edit(this)">Update Details</button></a></td> 
+          <td><a href="edit_team.php?team_id='.$encoded_team_id.'"><button type="button" style="margin:0px;"  class="btn btn-gradient-success btn-sm"  onclick="edit(this)">Update</button></a></td> 
       </tr> 
        ';
            } 

@@ -69,7 +69,13 @@ include 'config.php';
             <div class="content-wrapper updated">
                 <div class="page-header">
                     <h2>Assign Judges</h2>
-
+                    <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+      <button id="reloadButton" class="btn page-title-icon btn-sm text-white" onclick="window.history.back() ">Back</button>
+      </li>
+    </ul>
+  </nav>
                 </div>
 
 
@@ -129,7 +135,7 @@ include 'config.php';
                                         <label for="studentType">Select Team Category:</label>
                                         <select class="form-select" id="team_category" name="team_category">
                                             <option value="">Select Team Category</option>
-                                            <option value="">Select Team Category</option>
+                                           
                                             <?php
                                             $q_t = mysqli_query($conn, "select distinct category from tbl_team where category !=' '");
                                             while ($d_t = mysqli_fetch_assoc($q_t)) {
@@ -223,6 +229,8 @@ include 'config.php';
     <!-- Plugin js for this page -->
 
     <script src="../assets/js/jquery.cookie.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="../assets/js/off-canvas.js"></script>
@@ -232,7 +240,7 @@ include 'config.php';
     <!-- Custom js for this page -->
     <script src="../assets/js/dashboard.js"></script>
     <script src="../assets/js/todolist.js"></script>
-    <script src="../assets/js/ajaxscript.js" type="text/javascript"></script>
+    <script src="../assets/js/ajaxscript.js?v=3" type="text/javascript"></script>
     <!-- End custom js for this page -->
 </body>
 

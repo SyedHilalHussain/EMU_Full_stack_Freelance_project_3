@@ -30,7 +30,7 @@ class API extends DBConnection
         }
 
 
-        $query = "update tbl_team_member set photo_consent = $photo_consent where id = $student_id";
+        $query = "update student set photo_consent = $photo_consent where student_id = $student_id";
         if ($this->conn->query($query)) {
             $resp['status'] = 'Success';
             $resp['msg'] = 'Updated Successfully!';
@@ -47,16 +47,17 @@ class API extends DBConnection
     {
         extract($_POST);
 
-        $id = $_POST['id'];
+        $id = $_POST['student_id'];
         $target_dir_1 = "test_upload/";
         $tmp_name = $_FILES["photo_form"]["tmp_name"];
         $name = $_FILES["photo_form"]["name"];
-        $path = "$target_dir_1/$name";
-        if (move_uploaded_file($tmp_name, "$target_dir_1/$name")) {
+        $filenewname = rand(99999, 1000000) . "-" . $name;
+        $path = "$target_dir_1/$filenewname";
+        if (move_uploaded_file($tmp_name, "$path")) {
             #$_SESSION["uploaded_file"] =  "$dir/$name";
             //$_SESSION["image_name"] = "$name";
 
-            $q = "update tbl_team_member set photo_consent_form='$path' where id = $id";
+            $q = "update student set photo_consent_form='$path' where student_id = $id";
             if ($this->conn->query($q)) {
                 $resp['status'] = 'Success';
                 $resp['msg'] = 'Updated Successfully!';
@@ -82,24 +83,62 @@ class API extends DBConnection
         $team_id = $_POST['team_id'];
         $video_pitch_link = $_POST['video_pitch_link'];
         if ($video_pitch_link != '') {
-            $this->conn->query("update tbl_team set video_pitch  = '$video_pitch_link' where id = $team_id");
+            $q = "UPDATE tbl_team set video_pitch  = '$video_pitch_link' where id = $team_id";
+
+            if ($this->conn->query($q)) {
+                $resp['status'] = 'Success';
+                $resp['msg'] = "Pitch Url Updated Successfully!\n";
+            } else {
+                $resp['status'] = 'Failed';
+                $resp['msg'] = "Url Update Process Failed\n";
+            }
         }
         #echo "<script>alert('out if')</script>";
         if ($_FILES['fileToUpload']['size'] > 0) {
-            #echo "<script>alert('inside if')</script>";
+            $maxsize = 5242880; // 5MB
+            $name = $_FILES['fileToUpload']['name'];
+            $filenewname = rand(99999, 1000000) . "-" . $name;
             $target_dir = "test_upload/";
-            $target_file_video = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-            $video_path = $_FILES['fileToUpload']['name'];
-            $this->conn->query("update tbl_team set video_pitch  = 'test_upload/$video_path' where id = $team_id");
-            move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file_video);
+            $target_file_video = $target_dir . $filenewname;
+            $extension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            $extensions_arr = array("mp4", "avi", "3gp", "mov", "mpeg");
+            if (in_array($extension, $extensions_arr)) {
+                if ($_FILES['fileToUpload']['size'] < $maxsize && $_FILES["fileToUpload"]["size"] != 0) {
+
+                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file_video)) {
+                        $this->conn->query("update tbl_team set video_pitch  = '$target_file_video' where id = $team_id");
+                        $resp['status'] = 'Success';
+                        $resp['msg'] .= "File Uploaded Successfully!\n";
+                    } else {
+                        $resp['status'] = 'Failed';
+                        $resp['msg'] .= "Failed To Upload Video File\n";
+                    }
+                } else {
+                    $resp['status'] = 'Failed';
+                    $message .= "File too large. File must be less than 5MB.\n";
+                }
+            } else {
+                $resp['status'] = 'Failed';
+                $message .= "Invalid file extension.\n";
+            }
         }
         if ($_FILES['log_book']['size'] > 0) {
             #echo "<script>alert('inside if')</script>";
             $target_dir = "test_upload/";
-            $target_file = $target_dir . basename($_FILES["log_book"]["name"]);
-            $doc_path = $_FILES['log_book']['name'];
-            $this->conn->query("update tbl_team set log_book='test_upload/$doc_path' where id = $team_id");
-            move_uploaded_file($_FILES["log_book"]["tmp_name"], $target_file);
+            $name = $_FILES["log_book"]["name"];
+            $filenewname = rand(99999, 1000000) . "-" . $name;
+            $target_file = $target_dir . $filenewname;
+
+
+            if (move_uploaded_file($_FILES["log_book"]["tmp_name"], $target_file)) {
+                if ($this->conn->query("update tbl_team set log_book='$target_file' where id = $team_id")) {
+                    $resp['status'] = 'Success';
+                    $message .= "logbook Uploaded Successfully\n";
+                }
+            } else {
+                $resp['status'] = 'Failed';
+                $message .= "Failed to Upload a logbook\n";
+            }
         }
 
 
@@ -114,7 +153,7 @@ class API extends DBConnection
 
         // move_uploaded_file($_FILES["photo_form"]["tmp_name"], $target_file_1);
 
-        echo "<script type='text/javascript'> document.location = 'home.php'; </script>";
+        // echo "<script type='text/javascript'> document.location = 'home.php'; </script>";
 
         $resp['status'] = 'Success';
         $resp['msg'] = 'Updated Successfully!';
@@ -129,44 +168,46 @@ class API extends DBConnection
             $_SESSION["uploaded_file"] = $base64; */
         return json_encode($resp);
     }
-function edit_member(){
+    function admin_edit_member()
+    {
 
 
-    extract($_POST);
-    $first_name=$_POST['first_name'];
-    $last_name=$_POST['last_name'];
-    $student_grade=$_POST['student_grade'];
-    $student_school_name=$_POST['student_school_name'];
-    $student_school_district=$_POST['student_school_district'];
-    $student_tshirt=$_POST['student_tshirt'];
-    $photo_consent=$_POST['photo_consent'];
-    $video_exp_link=$_POST['video_exp_link'];
-    $student_id=$_POST['student_id'];
-   
-        $q = "UPDATE tbl_team_member SET
-                student_first_name = '$first_name',
-                student_last_name = '$last_name',
-                student_grade = '$student_grade',
-                student_school_name = '$student_school_name',
-                student_school_district = '$student_school_district',
-                t_shirt_size = '$student_tshirt',
-                photo_consent = '$photo_consent',
-                video_exp_link = '$video_exp_link'
-            WHERE id = $student_id";
-        
-        if($this->conn->query($q)){
+        extract($_POST);
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $student_grade = $_POST['student_grade'];
+        $student_school_name = $_POST['student_school_name'];
+        $student_school_district = $_POST['student_school_district'];
+        $student_tshirt = $_POST['student_tshirt'];
+        $photo_consent = $_POST['photo_consent'];
+        $video_exp_link = $_POST['video_exp_link'];
+        $student_id = $_POST['student_id'];
+
+
+        $q = "UPDATE student SET
+                    student_first_name = '$first_name',
+                    student_last_name = '$last_name',
+                    student_grade = '$student_grade',
+                    student_school_name = '$student_school_name',
+                    student_school_district = '$student_school_district',
+                    t_shirt_size = '$student_tshirt',
+                    photo_consent = '$photo_consent',
+                    video_exp_link = '$video_exp_link'
+                WHERE student_id = $student_id";
+
+        if ($this->conn->query($q)) {
             $resp['status'] = 'Success';
             $message = "Profile Updated Successfully!\n";
-        }else{
+        } else {
             $resp['status'] = 'Failed';
             $message = "Failed to Updated Profile !\n";
         }
 
         if ($_FILES['fileToUpload']['size'] > 0) {
-            $maxsize = 25242880; // 5MB
+            $maxsize = 5242880; // 5MB
             $name = $_FILES['fileToUpload']['name'];
             $filenewname = rand(99999, 1000000) . "-" . $name;
-            $target_dir = "../superadmin/test_upload/";
+            $target_dir = "./test_upload/";
             $target_file = $target_dir . $filenewname;
             $extension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
             $extensions_arr = array("mp4", "avi", "3gp", "mov", "mpeg");
@@ -174,45 +215,44 @@ function edit_member(){
             if (in_array($extension, $extensions_arr)) {
                 if ($_FILES['fileToUpload']['size'] < $maxsize && $_FILES["fileToUpload"]["size"] != 0) {
                     if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $target_file)) {
-                        $query = "UPDATE tbl_team_member SET video_exp_link = '$filenewname' WHERE id = $student_id";
+                        $query = "UPDATE student SET video_exp_link = '$target_file' WHERE student_id = $student_id";
                         $this->conn->query($query);
                         $resp['status'] = 'Success';
-                        $message .= "File Uploaded Successfully!\n"; }
+                        $message .= "File Uploaded Successfully!\n";
+                    }
                 } else {
                     $resp['status'] = 'Failed';
                     $message .= "File too large. File must be less than 5MB.\n";
-                   }
+                }
             } else {
                 $resp['status'] = 'Failed';
                 $message .= "Invalid file extension.\n";
-                
-              }
-        } 
-    
-
-    if ($_FILES['log_book']['size'] > 0) {
-        $target_dir = "../superadmin/test_upload/";
-        $name = $_FILES["log_book"]["name"];
-        $filenewname = rand(99999, 1000000) . "-" . $name;
-        $target_file = $target_dir . $filenewname;
-        $doc_path = $_FILES['log_book']['name'];
-
-        if (move_uploaded_file($_FILES['log_book']['tmp_name'], $target_file)) {
-           if( $this->conn->query("UPDATE tbl_team_member SET photo_consent_form='$filenewname' WHERE id = $student_id")           ){
-            $message .= "Consent Form Uploaded Successfully\n";
-           }
-        } else {
-            $resp['status'] = 'Failed';
-            $message .= "Failed to Upload a consent Form\n";
-           
+            }
         }
+
+
+        if ($_FILES['log_book']['size'] > 0) {
+            $target_dir = "test_upload/";
+            $name = $_FILES["log_book"]["name"];
+            $filenewname = rand(99999, 1000000) . "-" . $name;
+            $target_file = $target_dir . $filenewname;
+            $doc_path = $_FILES['log_book']['name'];
+
+            if (move_uploaded_file($_FILES['log_book']['tmp_name'], $target_file)) {
+                if ($this->conn->query("UPDATE student SET photo_consent_form='$target_file' WHERE student_id = $student_id")) {
+                    $message .= "Consent Form Uploaded Successfully\n";
+                }
+            } else {
+                $resp['status'] = 'Failed';
+                $message .= "Failed to Upload a consent Form\n";
+            }
+        }
+
+        $resp['msg'] = $message;
+        $resp['error'] = $this->conn->error;
+
+        return json_encode($resp);
     }
-
-    $resp['msg'] = $message;
-    $resp['error'] = $this->conn->error;
-
-    return json_encode($resp);
-}
 
 
 
@@ -228,12 +268,12 @@ function edit_member(){
         $password = $_POST['password'];
         $category = $_POST['category'];
         $user_type = $_POST['user_type'];
-        $id =$_POST['user_id'];
-        $year=date('Y');
-        if (isset($_FILES['dp']) && $_FILES['dp']['size'] >0 ) {
+        $id = $_POST['user_id'];
+        $year = date('Y');
+        if (isset($_FILES['dp']) && $_FILES['dp']['size'] > 0) {
 
-            
-            
+
+
             $filesize = $_FILES['dp']['size'];
             $filetmpname = $_FILES["dp"]["tmp_name"];
             $filename = $_FILES["dp"]["name"];
@@ -257,27 +297,24 @@ function edit_member(){
                                                     profile_pic='$filenewname',
                                                     Year='$year'
                                                     where id = $id");
-                                                    if($this->conn->query($q)){
-                                                        $resp['status'] = 'Success';
-                                                        $resp['msg'] = 'Profile updated successfully';
-                                                    }else{
-                                                        $resp['status'] = 'Failed';
-                                                        $resp['msg'] = 'Unexpected Error Try Again!';
-                                                        }
+                        if ($this->conn->query($q)) {
+                            $resp['status'] = 'Success';
+                            $resp['msg'] = 'Profile updated successfully';
+                        } else {
+                            $resp['status'] = 'Failed';
+                            $resp['msg'] = 'Unexpected Error Try Again!';
+                        }
                     } else {
                         $resp['status'] = 'Failed';
                         $resp['msg'] = 'Unexpected Error Try Again!';
-                        
                     }
                 } else {
                     $resp['status'] = 'Failed';
                     $resp['msg'] = 'Too Big File For profile';
-                    
                 }
             } else {
                 $resp['status'] = 'Failed';
                 $resp['msg'] = 'Invalid Picture For profile';
-            
             }
         } else {
 
@@ -288,15 +325,15 @@ function edit_member(){
                                                     user_type = '$user_type',
                                                     category = '$category',
                                                     password = '$password',
-                                                    category = '$category',
+                                                    
                                                     Year='$year'
                                                     where id = $id");
-            if($this->conn->query($q)){
-            $resp['status'] = 'Success';
-            $resp['msg'] = 'Profile updated successfully';
-        }else{
-            $resp['status'] = 'Failed';
-            $resp['msg'] = 'Unexpected Error Try Again!';
+            if ($this->conn->query($q)) {
+                $resp['status'] = 'Success';
+                $resp['msg'] = 'Profile updated successfully';
+            } else {
+                $resp['status'] = 'Failed';
+                $resp['msg'] = 'Unexpected Error Try Again!';
             }
         }
         return json_encode($resp);
@@ -373,33 +410,33 @@ function edit_member(){
             'display_board',
             'prototype',
             'online_pitch'
-        ]   ;
-  // array to store the field assignments
-  $fieldAssignments = [];
+        ];
+        // array to store the field assignments
+        $fieldAssignments = [];
 
-  // Iterate through the fields and check if they are empty
-  foreach ($fieldsToUpdate as $field) {
-    if (isset($_POST[$field])) {
-        $fieldValue = mysqli_real_escape_string($this->conn, $_POST[$field]);
-        $fieldAssignments[] = "$field = '$fieldValue'";
-    }
-}
+        // Iterate through the fields and check if they are empty
+        foreach ($fieldsToUpdate as $field) {
+            if (isset($_POST[$field])) {
+                $fieldValue = mysqli_real_escape_string($this->conn, $_POST[$field]);
+                $fieldAssignments[] = "$field = '$fieldValue'";
+            }
+        }
         // foreach ($fields as $field) {
         //     if ($field == '') {
         //         $field = 'NULL';
         //     }
         // }
-  // Construct the SET clause of the SQL query
-  $setClause = implode(', ', $fieldAssignments);
+        // Construct the SET clause of the SQL query
+        $setClause = implode(', ', $fieldAssignments);
 
-  // Escape and handle the 'question_asked' field
-  $question_asked = mysqli_real_escape_string($this->conn, $question_asked);
-  $setClause .= ", question_asked = '$question_asked'";
+        // Escape and handle the 'question_asked' field
+        $question_asked = mysqli_real_escape_string($this->conn, $question_asked);
+        $setClause .= ", question_asked = '$question_asked'";
         $q_e1 = ("select * from tbl_judge_assessment where user_id = $user_id and team_id = $team_id");
         $q_e = $this->conn->query($q_e1);
         $d_e = $q_e->fetch_assoc();
         $e_id = $d_e['id'];
-    
+
 
         $r = "UPDATE tbl_judge_assessment SET $setClause WHERE id = $e_id";
 
@@ -583,7 +620,7 @@ function edit_member(){
 
         // Check if the email already exists
         $existing_email_query = "SELECT * FROM tbl_user WHERE email = '$email'";
-        $existing_email_result =$this->conn->query($existing_email_query);
+        $existing_email_result = $this->conn->query($existing_email_query);
 
         if ($existing_email_result->num_rows > 0) {
             $resp['status'] = 'Failed';
@@ -800,47 +837,56 @@ function edit_member(){
 
         return json_encode($resp);
     }
-    function year_change(){
-       
+    function year_change()
+    {
 
-        
 
-        
-        if(isset($_POST['selectedyear'])){
-            $selected_year =$_POST['selectedyear'];
 
-        $content = '';
-        $q_team = $this->conn->query("SELECT ttm.*, t.year AS active_year FROM tbl_team_member AS ttm JOIN tbl_team AS t ON ttm.team_id = t.id 
-        WHERE ttm.student_id IS NOT NULL AND t.year=$selected_year;");
-        $i = 1; 
-        $no_rows = mysqli_num_rows($q_team);
-        while ($row = $q_team->fetch_assoc()) {
-        
-           $content .= '                                                           
+
+
+        if (isset($_POST['selectedyear'])) {
+            $selected_year = $_POST['selectedyear'];
+
+            $content = '';
+            $q_team = $this->conn->query("SELECT ts.*
+        FROM (
+            SELECT DISTINCT ttm.student_id
+            FROM tbl_team_member AS ttm
+            JOIN tbl_team AS t ON t.id = ttm.team_id
+            WHERE t.year = $selected_year
+        ) AS unique_students
+        JOIN student AS ts ON unique_students.student_id = ts.student_id;
+        ");
+            $i = 1;
+            $no_rows = mysqli_num_rows($q_team);
+            while ($row = $q_team->fetch_assoc()) {
+
+                $content .= '                                                           
         
         <tr>
-        <td>'.$i.'</td>
-        <td>'.$row['student_first_name'].'</td>
-        <td>'.$row['student_last_name'].'</td>
-        <td>'.$row['student_grade'].'</td>
-        <td>'.$row['t_shirt_size'].'</td>
-        <td>'.$row['student_school_name'].'</td>
-        <td>'.$row['student_school_district'].'</td>
+        <td>' . $i . '</td>
+        <td>' . $row['student_first_name'] . '</td>
+        <td>' . $row['student_last_name'] . '</td>
+        <td>' . $row['student_grade'] . '</td>
+        <td>' . $row['t_shirt_size'] . '</td>
+        <td>' . $row['student_school_name'] . '</td>
+        <td>' . $row['student_school_district'] . '</td>
         <td>
-            <a href="../student/edit_member.php?student_id='.$row['id'].'">
+            <a href="../student/edit_member.php?student_id=' . $row['student_id'] . '">
                 <button type="button" class="btn btn-small btn-success px-3 py-2" name="submit">Edit</button>
             </a>
         </td>
         </tr>';
-         
-        
-        
-           
-           $i++; 
+
+
+
+
+                $i++;
+            }
+            $response = array('content' => $content, 'selected_year' => $selected_year, 'no_rows' => $no_rows);
+            echo json_encode($response);
         }
-        $response = array('content' => $content, 'selected_year' => $selected_year, 'no_rows' => $no_rows);
-        echo json_encode($response);
-            }}
+    }
 }
 
 $action = isset($_GET['action']) ? $_GET['action'] : '';
@@ -881,8 +927,8 @@ switch ($action) {
     case ('edit_team'):
         echo $api->edit_team();
         break;
-    case ('edit_member'):
-        echo $api->edit_member();
+    case ('admin_edit_member'):
+        echo $api->admin_edit_member();
         break;
     case ('year_change'):
         echo $api->year_change();

@@ -123,7 +123,34 @@ $date_check = '2030-09-27 00:00:00';
 				<div class="row">
 					<div class="col-12 grid-margin">
 						<div class="card">
-							<div class="card-body">
+						<?php 
+                                  
+                                 $query = "SELECT DISTINCT t.year
+								 FROM tbl_team AS t
+								 JOIN tbl_team_member AS tm ON t.id = tm.team_id
+								 WHERE tm.student_id = '$id'
+                                ORDER BY t.year DESC
+                                             LIMIT 4";
+
+                                   $result = mysqli_query($conn, $query);
+
+                                             ?> 
+                                 <div class="d-flex justify-content-between mx-2 mt-2 mb-0">
+                                             <h4 class="card-title mt-1">Your Teams <span id="year_span">2023
+                                                </span> </h4>
+
+                                           <div class="d-flex justify-content-between">
+                                             <label for="studentType " class="mt-1">Student Grade:</label>
+                                             <select name="year_change" id="team_year_change" class="form-select form-select-sm ms-3" style="width: fit-content;" >
+
+                                             <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                                      <option><a href="home_prev.php?previous_year=<?php echo $row['year']; ?>"><?php echo $row['year']; ?></a></option>
+                        <?php } ?>
+
+                                             </select>
+                                         </div>
+                                         </div>
+							<div class="card-body pt-3">
 
 								<div class="table-responsive">
 									<table class="table">
@@ -155,7 +182,7 @@ $date_check = '2030-09-27 00:00:00';
 
 											while ($r_team = mysqli_fetch_assoc($q_team)) {
 												$team_id = $r_team['team_id'];
-												$team_m_q = mysqli_query($conn, "SELECT GROUP_CONCAT(s.student_first_name) AS members
+												$team_m_q = mysqli_query($conn,"SELECT GROUP_CONCAT(s.student_first_name) AS members
 												FROM tbl_team_member tm
 												JOIN student s ON tm.student_id = s.student_id
 												WHERE tm.team_id = $team_id AND s.deleted = 0;");
@@ -177,7 +204,7 @@ $date_check = '2030-09-27 00:00:00';
 														<td></td>
 													<?php }
 													if ($r_team['log_book']) {  ?>
-														<td><a href="<?php echo $r_team['log_book'] ?>">LogBook</a></td>
+														<td><a href="./test_upload/<?php echo $r_team['log_book'] ?>" target="blank">LogBook</a></td>
 													<?php } else { ?>
 														<td></td>
 													<?php }
@@ -193,14 +220,17 @@ $date_check = '2030-09-27 00:00:00';
 													?>
 														<td title="<?php echo $text; ?>"><?php echo 'Incomplete'; ?></td>
 													<?php } ?>
-													<?php if (($year) == date("Y")) {
-														if ($date <= $date_check) { ?>
+													<?php if (($year) ==2023) {
+														// if ($date <= $date_check) {
+															$encoded_team_id = base64_encode($team_id); ?>
 															<td class="td_button">
-																<a href="viewteams.php?team_id=<?php echo $team_id ?>"><button type="button" style="margin:0px;" class="btn-success btn-sm" onclick="edit(this)">Edit</button></a>
-																<a href="edit_team.php?team_id=<?php echo $team_id ?>"><button type="button" style="margin:0px;" class="btn-success btn-sm" onclick="edit(this)">Upload Files</button></a>
+															
+																<a href="viewteams.php?team_id=<?php echo $encoded_team_id ?>"><button type="button" style="margin:0px;" class="btn-success btn-sm" onclick="edit(this)">Edit</button></a>
+																<a href="edit_team.php?team_id=<?php echo $encoded_team_id ?>"><button type="button" style="margin:0px;" class="btn-success btn-sm" onclick="edit(this)">Upload Files</button></a>
 																<a onClick="return confirm('Are you sure you want to delete?')" href="set_delete.php?id=<?php echo $team_id ?>&table=tbl_team&return=home" class="btn  purple border p-2"> Delete</a>
 															</td>
-													<?php }
+													<?php 
+													// }
 													} ?>
 													</td>
 												</tr>
@@ -248,7 +278,7 @@ $date_check = '2030-09-27 00:00:00';
 	<!-- Custom js for this page -->
 	<script src="../assets/js/dashboard.js"></script>
 	<script src="../assets/js/todolist.js"></script>
-	<script src="../assets/js/ajaxscript.js" type="text/javascript"></script>
+	<script src="./assets/js/ajax.js?v=4" type="text/javascript"></script>
 	<!-- End custom js for this page -->
 </body>
 
