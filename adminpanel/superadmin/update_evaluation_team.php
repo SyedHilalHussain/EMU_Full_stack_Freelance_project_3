@@ -4,9 +4,9 @@ include 'config.php';
 
 
 
-$id=$_GET['judge_id'];
+$id=base64_decode($_GET['judge_id']);
 
-$team_id = $_GET['team_id'];
+$team_id = base64_decode($_GET['team_id']);
 
 // if($type=='SuperUser'){
 $v_q = mysqli_query($conn, "select * from tbl_team where id = $team_id");
@@ -245,7 +245,10 @@ if (!empty($match) && isset($match[1])) {
 
                                                 while ($r_team = mysqli_fetch_assoc($q_team)) {
                                                     $team_id = $r_team['team_id'];
-                                                    $team_m_q = mysqli_query($conn, "SELECT GROUP_CONCAT(student_first_name) AS members FROM tbl_team_member WHERE team_id = $team_id");
+                                                    $team_m_q = mysqli_query($conn, "SELECT GROUP_CONCAT(s.student_first_name) AS members
+                                                    FROM tbl_team_member tm
+                                                    JOIN student s ON tm.student_id = s.student_id
+                                                    WHERE tm.team_id = $team_id");
                                                     $team_m_r = mysqli_fetch_assoc($team_m_q);
                                                 ?>
 

@@ -1,5 +1,5 @@
 <?php
- 
+include '../judge.auth.php';
 include '../superadmin/config.php';
 
 

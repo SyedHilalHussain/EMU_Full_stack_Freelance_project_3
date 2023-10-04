@@ -67,11 +67,11 @@
                 <p class="fs-5 fw-bold text-primary">Donate</p>
                 <h1 class="display-5 mb-5">Donate And Support Us</h1>
             </div>
-                <p class="text-center mx-auto wow fadeInUp"  data-wow-delay="0.1s">
+                <p class="text-center mx-auto wow fadeInUp fs-5"  data-wow-delay="0.1s">
                     To continue empowering the innovators of tomorrow, we are seeking your generous support through donations and grants. By investing in these programs, you will contribute to the growth and success of students, preparing them to make a significant impact in their future careers and society as a whole. Donate through our secure online system.
                 </p> 
                 <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <button class="btn btn-primary py-md-3 px-4 mt-md-4" type="submit">Donate</button>
+                    <a href="https://www.emich.edu/foundation/give/" class="btn btn-primary py-md-3 px-4 mt-md-4" >Donate</a>
                 </div> 
                 </div>
 
@@ -98,10 +98,10 @@
                             <div  class="owl-carousel  carousel1">
 
 
-                              <figure><img src="img/service-1.jpg" alt=""></figure>  
-                               <figure><img src="img/service-2.jpg" alt=""></figure> 
-                               <figure><img src="img/service-3.jpg" alt=""></figure> 
-                               <figure><img src="img/service-4.jpg" alt=""></figure> 
+                            <img src="img/IMG_0561.JPG" alt="" > 
+                            <img src="img/IMG_0545.JPG" alt="" > 
+                               <img src="img/IMG_0550.JPG" alt=""> 
+                               <img src="img/IMG_0558.JPG" alt=""> 
                               </div>
                            
               
@@ -117,10 +117,10 @@
                              <div  class="owl-carousel  carousel1">
 
 
-                              <figure><img src="img/service-1.jpg" alt=""></figure>  
-                               <figure><img src="img/service-2.jpg" alt=""></figure> 
-                               <figure><img src="img/service-3.jpg" alt=""></figure> 
-                               <figure><img src="img/service-4.jpg" alt=""></figure> 
+                             <figure><img src="img/IMG_0634.JPG" alt=""></figure>  
+                                 <figure><img src="img/IMG_0627.JPG" alt=""></figure> 
+                                 <figure><img src="img/Judge.JPG" alt=""></figure> 
+                                 <figure><img src="img/IMG_0646.JPG" alt=""></figure>  
                               </div>
                           </div>
                        
@@ -151,11 +151,10 @@
                         <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.11s">
                             <div  class="owl-carousel  carousel1">
 
-
-                                <figure><img src="img/service-1.jpg" alt=""></figure>  
-                                 <figure><img src="img/service-2.jpg" alt=""></figure> 
-                                 <figure><img src="img/service-3.jpg" alt=""></figure> 
-                                 <figure><img src="img/service-4.jpg" alt=""></figure> 
+                            <img src="img/IMG_0744.JPG" alt="" > 
+                            <img src="img/IMG_0646.JPG" alt="" > 
+                               <img src="img/IMG_0627.JPG" alt=""> 
+                               <img src="img/IMG_0493.JPG" alt=""> 
                                 </div>
                              
                         </div>

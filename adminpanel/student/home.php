@@ -1,5 +1,7 @@
 <?php
+require_once '../student.auth.php';
 session_start();
+
 include '../superadmin/config.php';
 if(isset($_SESSION['id'])){
 $current_year = date("Y");	

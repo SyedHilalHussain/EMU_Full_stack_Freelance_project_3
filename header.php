@@ -26,9 +26,10 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="assets/lib/owlcarousel/assets/owl.carousel.css">
+  <link rel="stylesheet" href="assets/lib/owlcarousel/assets/owl.theme.default.min.css">
     <!-- Template Stylesheet -->
-    <link href="assets/css/style.css?v=1" rel="stylesheet">
+    <link href="assets/css/style.css?v=6" rel="stylesheet">
 </head>
 
 <body>

@@ -77,11 +77,57 @@ $('#p1,#p2,#p3,#p4,#p5').hover(function(e){
         ]
     });
 
+    $(".mentor-carousel").owlCarousel({
+        autoplay:true,
+        smartSpeed: 1000,
+        loop: true,
+        dots: true,
+       margin:30,
+        
+      
+       
+        responsive: {
+            0: {
+              items: 1, // Number of items to display at different screen sizes
+            },
+            768: {
+              items: 2,
+            },
+            1024: {
+              items: 3,
+            },
+        }
+      
+    });
+    $(".event-carousel").owlCarousel({
+        
+        
+        smartSpeed: 1000,
+      
+        dots: true,
+       margin:20,
+        
+       stagePadding: 33,
+       
+        responsive: {
+            0: {
+              items: 1, // Number of items to display at different screen sizes
+            },
+            768: {
+              items: 2,
+            },
+            1024: {
+              items: 3,
+            },
+        }
+      
+    });
+
     $(document).ready(function() {
         $('.carousel1').owlCarousel({
             loop: true,
             margin: 10,
-    
+            
             autoplay: true,
             autoplayhoverpause: true,
             aotuplaytimeout: 80,
@@ -116,10 +162,10 @@ $('#p1,#p2,#p3,#p4,#p5').hover(function(e){
     loop: true,
     lazyLoad:true,
     margin: 45,
-    dots: false,
+    
     loop: true,
     autoplay: true,
-    autoplaySpeed:5500,
+    autoplaySpeed:3000,
     aotuplaytimeout: 100,
     slideTransition:'linear',
     responsive: {
@@ -130,10 +176,10 @@ $('#p1,#p2,#p3,#p4,#p5').hover(function(e){
             items:4
         },
         768:{
-            items:6
+            items:5
         },
         992:{
-            items:8
+            items:6
         }
     }
 });

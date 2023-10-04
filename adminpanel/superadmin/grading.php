@@ -1,6 +1,5 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+include '../admin.auth.php';
 include 'config.php';
 $interest_q = mysqli_query($conn, "select count(*) as count from tbl_user where user_type not in ('SuperUser')");
 $interest_d = mysqli_fetch_assoc($interest_q);

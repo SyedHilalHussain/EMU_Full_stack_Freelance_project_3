@@ -441,7 +441,7 @@ span.kreep:hover {
 
 .service-item .service-text {
     background: #FFFFFF;
-    box-shadow: 0 0 45px rgba(0, 0, 0, .08);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .08);
     transition: .3s;
 }
 
@@ -622,6 +622,26 @@ span.kreep:hover {
     opacity: 1;
 }
 
+/* mentor carousel style */
+.mentor-carousel .owl-dots {
+    text-align: center; /* Center the dots horizontally */
+    margin-top: 30px; /* Adjust the margin to control the space between items and dots */
+  }
+  
+  /* Style the individual dot */
+  .mentor-carousel .owl-dot {
+    display: inline-block;
+    margin: 0 5px; /* Adjust the margin between dots */
+  }
+  
+  /* Style the active dot */
+  .mentor-carousel .owl-dot {
+    border:1px solid green; /* Change the active dot's background color */
+    border-radius: 50%; /* Make the dots circular */
+    width: 10px; /* Adjust the width and height of the dots */
+    height: 10px;
+  }
+
 
 /*** Testimonial ***/
 
@@ -672,7 +692,8 @@ about us */
 @media (min-width: 1000px){
 .emuinvent p{
   line-height: 23px;
-  font-size: 18px;
+  font-size: 17px;
+  
 }
 }
 /* figure .img-fluid{

@@ -14,7 +14,7 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -33,77 +33,78 @@
 </head>
 
 <body>
-     <!-- Spinner Start -->
-   <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
-</div>
-<!-- Spinner End -->
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+    </div>
+    <!-- Spinner End -->
 
 
-<!-- Topbar Start -->
+    <!-- Topbar Start -->
 
-<!-- Topbar End -->
+    <!-- Topbar End -->
 
 
-<!-- Navbar Start -->
-<?php include  'header.php'; ?>
-<!-- Navbar End -->
+    <!-- Navbar Start -->
+    <?php include  'header.php'; ?>
+    <!-- Navbar End -->
 
 
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
             <h1 class="display-3 text-white mb-4 animated slideInDown">Sponsers</h1>
-           
+
         </div>
     </div>
     <!-- Page Header End -->
-   <!-- Features Start -->
-   <div class="container-xxl py-5">
-    <div class="container">
-        <div class="row g-5 align-items-center">
-            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                <p class="fs-5 fw-bold text-primary">Our Partners</p>
-                <h1 class="display-5 mb-4">Thanks For Sponsoring Us!</h1>
-                <p class="mb-4">We would like to thank our sponsors "FORD COMMUNITY CORP", "EMU BRIGHT FUTURE" and "Henry Ford's Invention Convention" for their generous donations and partnership.We need sponsors to help us in organizing and encouraging students to learn Innovation and Entrepreneurship. Interested in supporting the students?</p>
-                <a class="btn btn-primary py-md-3 px-4" href="">More</a>
-            </div>
-            <div class="col-lg-6">
-                <div class="row g-4 align-items-center">
-                    <div class="col-md-6">
-                        <div class="row g-4">
-                            <div class="col-12 wow fadeIn" data-wow-delay="0.3s">
-                                <div class="text-center rounded py-5 px-4" style="box-shadow: 0 0 45px rgba(0,0,0,.08);">
-                                    <div class="btn-square bg-light rounded-circle mx-auto mb-4" style="width: 90px; height: 90px;">
-                                     <img src="/img/toyota1.png" alt="" >
+    <!-- Features Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <p class="fs-5 fw-bold text-primary">Our Partners</p>
+                    <h1 class="display-5 mb-4">Thanks For Sponsoring Us!</h1>
+                    <p class="mb-4">EMUiNVENT and its programs are made possible through the generous support of our sponsors.
+                        We extend our heartfelt gratitude to the Ford Community Corp and EMU Bright Future for funding our inaugural event and laying the foundation for our success. In addition, we would like to express our appreciation to esteemed organizations such as SPARK East, MiSTEM, Ypsilanti Community Schools, Toyota, James H. Brickley Endowment, and many others who have provided vital funding throughout our journey. We extend our sincere thanks to all our sponsors, as their unwavering support has been instrumental in making our vision a reality. Without their continued contributions, the transformative impact of EMUiNVENT would not be possible.</p>
+                    <!-- <a class="btn btn-primary py-md-3 px-4" href="">More</a> -->
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-6">
+                            <div class="row g-4">
+                                <div class="col-12 wow fadeIn" data-wow-delay="0.3s">
+                                    <div class="text-center rounded py-5 px-4" style="box-shadow: 0 0 45px rgba(0,0,0,.08);">
+                                        <div class="btn-square bg-light rounded-circle mx-auto mb-4" style="width: 150px; height: 110px;">
+                                            <img src="img/fcc.png" alt="ford-logo" style="width: 100%; height:100%;">
+                                        </div>
+                                        <h4 class="mb-0 pb-md-3">FORD COMMUNITY CORP</h4>
                                     </div>
-                                    <h4 class="mb-0 pb-md-3">FORD COMMUNITY CORP</h4>
                                 </div>
-                            </div>
-                            <div class="col-12 wow fadeIn" data-wow-delay="0.5s">
-                                <div class="text-center rounded py-5 px-4" style="box-shadow: 0 0 45px rgba(0,0,0,.08);">
-                                    <div class="btn-square bg-light rounded-circle mx-auto mb-4" style="width: 90px; height: 90px;">
-                                        <i class="fa fa-users fa-3x text-primary"></i>
+                                <div class="col-12 wow fadeIn" data-wow-delay="0.5s">
+                                    <div class="text-center rounded py-5 px-4" style="box-shadow: 0 0 45px rgba(0,0,0,.08);">
+                                        <div class="btn-square bg-light rounded-circle mx-auto mb-4" style="width: 150px; height: 110px;">
+                                            <img src="img/EMUBF.png" alt="emubright-logo" style="width: 100%; height:100%;">
+                                        </div>
+                                        <h4 class="mb-0">EMU BRIGHT FUTURE</h4>
                                     </div>
-                                    <h4 class="mb-0">EMU BRIGHT FUTURE</h4>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 wow fadeIn" data-wow-delay="0.7s">
-                        <div class="text-center rounded py-5 px-4" style="box-shadow: 0 0 45px rgba(0,0,0,.08);">
-                            <div class="btn-square bg-light rounded-circle mx-auto mb-4" style="width: 90px; height: 90px;">
-                                <i class="fa fa-tools fa-3x text-primary"></i>
+                        <div class="col-md-6 wow fadeIn" data-wow-delay="0.7s">
+                            <div class="text-center rounded py-5 px-4" style="box-shadow: 0 0 45px rgba(0,0,0,.08);">
+                                <div class="btn-square bg-light rounded-circle mx-auto mb-4" style="width: 150px; height: 110px;">
+                                    <img src="img/SPARK.png" alt="emubright-logo" style="width: 100%; height:100%;">
+                                </div>
+                                <h4 class="mb-0">SPARK East</h4>
                             </div>
-                            <h4 class="mb-0">Henry Ford's Invention Convention</h4>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Features End -->
+    <!-- Features End -->
 
 
     <!-- Testimonial Start -->
@@ -113,22 +114,26 @@
                 <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.1s">
                     <p class="fs-5 fw-bold text-primary">Testimonial</p>
                     <h1 class="display-5 mb-5">What Our Sponsers Say About Us!</h1>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit sed stet lorem sit clita duo justo.</p>
-                    <a class="btn btn-primary py-md-3 px-4" href="">More</a>
+                    <!-- <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit sed stet lorem sit clita duo justo.</p> -->
+                    <!-- <a class="btn btn-primary py-md-3 px-4" href="">More</a> -->
                 </div>
                 <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="owl-carousel testimonial-carousel">
                         <div class="testimonial-item">
-                            <img class="img-fluid rounded mb-3" src="img/testimonial-1.jpg" alt="">
-                            <p class="fs-5">Dolores sed duo clita tempor justo dolor et stet lorem kasd labore dolore lorem ipsum. At lorem lorem magna ut et, nonumy et labore et tempor diam tempor erat.</p>
-                            <h4>Client Name</h4>
-                            <span>Profession</span>
+                            <img class=" rounded mb-3" src="img/pic-1.png" alt="" style="width:7%; height:7%;">
+                            <p class="fs-5">
+                                "It was interesting to learn a new way of teaching using engineering and science process, and really make kids to think about things".
+                            </p>
+                            <h4>Elementary School Teacher</h4>
+                            <span>Ypsilanti Elementary School</span>
                         </div>
                         <div class="testimonial-item">
-                            <img class="img-fluid rounded mb-3" src="img/testimonial-2.jpg" alt="">
-                            <p class="fs-5">Dolores sed duo clita tempor justo dolor et stet lorem kasd labore dolore lorem ipsum. At lorem lorem magna ut et, nonumy et labore et tempor diam tempor erat.</p>
-                            <h4>Client Name</h4>
-                            <span>Profession</span>
+                            <img class=" rounded mb-3" src="img/pic-2.png" alt="" style="width:7%; height:7%;">
+                            <p class="fs-5">
+                                Wonderful ! Owesome ! If students continue to do this every year from Middle to High schools, then their skill set will built up through the years. Our kids are just as skilled as others but our kid are more resilience. All we have to do is to give them more opportunities like EMUiNVENT and Dare2Design. These programs help create a passion for invention and creativity in our kids.
+                            </p>
+                            <h4>Alena Zachery-Ross</h4>
+                            <span>Superintendent Ypsilanti Community Schools</span>
                         </div>
                     </div>
                 </div>
@@ -136,64 +141,40 @@
         </div>
     </div>
     <!-- Testimonial End -->
-<!-- Quote Start -->
-<div class="container-fluid py-5">
-    <div class="container">
-        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-            <p class="fs-5 fw-bold text-primary">Registration</p>
-            <h1 class="display-5 mb-5">Register here to join Dare 2 Design </h1>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-7">
-                <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="row g-3">
-                        <div class="col-sm-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control border-0" id="gname" placeholder="Gurdian Name">
-                                <label for="gname">Your Name</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-floating">
-                                <input type="email" class="form-control border-0" id="gmail" placeholder="Gurdian Email">
-                                <label for="gmail">Your Email</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control border-0" id="cname" placeholder="Child Name">
-                                <label for="cname">Your Mobile</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control border-0" id="cage" placeholder="Child Age">
-                                <label for="cage">Service Type</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating">
-                                <textarea class="form-control border-0" placeholder="Leave a message here" id="message" style="height: 100px"></textarea>
-                                <label for="message">Message</label>
-                            </div>
-                        </div>
-                        <div class="col-12 text-center">
-                            <button class="btn btn-primary py-md-3 px-4" type="submit">Register</button>
+    <!-- Quote Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <p class="fs-5 fw-bold text-primary">Our Partners</p>
+                <h1 class="display-5 mb-5">Partners That Are Sponsoring Us</h1>
+            </div>
+            <!-- Vendor Start -->
+            <div class="container-fluid py-2 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="container py-2 mb-2">
+                    <div class="bg-white">
+                        <div class="owl-carousel vendor-carousel">
+                            <img src="img/SPARK.png" alt="">
+                            <img src="img/fcc.png" alt="">
+                            <img src="img/EMUBF.png" alt="">
+                            <img src="img/MSTEM.png" alt="">
+                            <img src="img/toyota.png" alt="">
+                            <img src="img/fcc.png" alt="">
+
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Vendor End -->
         </div>
     </div>
-</div>
-<!-- Quote End -->
+    <!-- Quote End -->
 
     <!-- Footer Start -->
     <?php include  'footer.php'; ?>
     <!-- Footer End -->
 
 
-   
+
 
 
     <!-- Back to Top -->

@@ -82,17 +82,17 @@
                                   teams get help and guidance from budding &amp; experienced engineers and entrepreneurs. These engineers and entrepreneurs will mentor students/ teams and 
                                   ensure that they are ready to participate in <b style="color:#2b873b;">EMUiNVENT</b>.&nbsp;</p>
                            
-                                  <button class="btn btn-primary " type="submit">More</button>
+                                  <!-- <button class="btn btn-primary " type="submit">More</button> -->
                         </div>
                        
                         <div class="col-lg-5 wow fadeInUp " data-wow-delay="0.8s">
                             <div  class="owl-carousel  carousel1">
 
 
-                                <img src="img/service-1.jpg" alt="">
-                                <img src="img/service-2.jpg" alt="">
-                                <img src="img/service-3.jpg" alt="">
-                                <img src="img/service-4.jpg" alt="">
+                                <img src="img/IMG_0550.JPG" alt="">
+                                <img src="img/IMG_0676.JPG" alt="">
+                                <img src="img/IMG_0545.JPG" alt="">
+                                <img src="img/IMG_0561.JPG" alt="">
                               </div>
                               
               

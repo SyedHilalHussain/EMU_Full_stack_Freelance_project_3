@@ -15,7 +15,7 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -31,6 +31,39 @@
 
     <!-- Template Stylesheet -->
     <link href="assets/css/style.css?v=2" rel="stylesheet">
+    <style>
+        .event-carousel .owl-item{
+            margin-top: 40px;
+            margin-bottom: 40px;
+           /* margin: 0 10px ; */
+           /* margin-right: 0; */
+            
+
+        }
+        .event-carousel .owl-item .icon-img{
+            max-width: 100%!important;
+            width: auto!important;
+        }
+        .event-carousel .owl-dots {
+    text-align: center; /* Center the dots horizontally */
+     /* Adjust the margin to control the space between items and dots */
+  }
+  
+  /* Style the individual dot */
+  .event-carousel .owl-dot {
+    display: inline-block;
+    margin: 0 5px; /* Adjust the margin between dots */
+  }
+  
+  /* Style the active dot */
+  .event-carousel .owl-dot {
+    border:1px solid green; /* Change the active dot's background color */
+    border-radius: 50%; /* Make the dots circular */
+    width: 10px; /* Adjust the width and height of the dots */
+    height: 10px;
+  }
+    </style>
+   
 </head>
 
 <body>
@@ -42,7 +75,7 @@
 
 
     <!-- Topbar Start -->
- <?php include  'header.php'; ?>
+    <?php include  'header.php'; ?>
     <!-- Navbar End -->
 
 
@@ -56,7 +89,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
                                 <h1 class="display-1 text-white mb-md-5 animated slideInDown">Invent, Explore, Excel</h1>
-                                <a href="" class="btn btn-primary py-sm-3 px-sm-4">More</a>
+                                <!-- <a href="" class="btn btn-primary py-sm-3 px-sm-4">More</a> -->
                             </div>
                         </div>
                     </div>
@@ -64,8 +97,8 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     <!-- Carousel End -->
 
 
@@ -81,7 +114,7 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Unleash Innovation!</h4>
-                                <span >Innovative program for students in grades 3-12. EMUiNVENT leads to Invention Convention Michigan.</span>
+                                <span>Innovative program for students in grades 3-12. EMUiNVENT leads to Invention Convention Michigan.</span>
                             </div>
                         </div>
                     </div>
@@ -94,7 +127,7 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Ignite Creativity</h4>
-                                <span >EMUiNVENT fuels creative thinking across diverse disciplines, inspiring inventive solutions to real-world challenges.</span>
+                                <span>EMUiNVENT fuels creative thinking across diverse disciplines, inspiring inventive solutions to real-world challenges.</span>
                             </div>
                         </div>
                     </div>
@@ -107,7 +140,7 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Path to Excellence</h4>
-                                <span >EMUiNVENT propels students towards Invention Convention Michigan, where exceptional inventors showcase their ideas and compete for prizes.</span>
+                                <span>EMUiNVENT propels students towards Invention Convention Michigan, where exceptional inventors showcase their ideas and compete for prizes.</span>
                             </div>
                         </div>
                     </div>
@@ -122,15 +155,15 @@
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5 align-items-end">
-                <div class="col-lg-3 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
-                    <img class="img-fluid rounded" data-wow-delay="0.1s" src="img/about.jpg">
+                <div class="col-lg-3 col-md-5  my-0 wow fadeInUp" data-wow-delay="0.1s">
+                    <img class="img-fluid rounded" data-wow-delay="0.1s" src="img/about2.jpg" style="width:100%; height:100%;">
                 </div>
                 <div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
                     <h1 class="display-1 text-primary mb-0">March, 2023</h1>
                     <p class="text-primary mb-4">Statewide Invention Convention competition</p>
                     <h1 class="display-5 mt-3 ">Our Success</h1>
                     <p class="mb-4  mt-3">We are delighted to share the remarkable achievements of the winners from the EMUiNVENT March 2023 competition, who had the opportunity to compete in the esteemed Statewide Invention Convention competition. We are proud to announce that our exceptional teams secured an impressive three out of nine major awards. Their outstanding performance has earned them the honor of representing the great state of Michigan at the upcoming Raytheon Technologies Invention Convention US Nationals.</p>
-                    
+
                 </div>
                 <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="row g-5">
@@ -138,14 +171,14 @@
                             <div class="border-start ps-4">
                                 <i class="fa fa-award fa-3x text-primary mb-3"></i>
                                 <h4 class="mb-3">Award Winning</h4>
-                                <span >We are proud to announce that our exceptional teams secured an impressive three out of nine major awards.</span>
+                                <span>We are proud to announce that our exceptional teams secured an impressive three out of nine major awards.</span>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-lg-12">
                             <div class="border-start ps-4">
                                 <i class="fas fa-trophy fa-3x text-primary mb-3"></i>
                                 <h4 class="mb-3">Achievement</h4>
-                                <span  >
+                                <span>
                                     Their outstanding performance has earned them the honor of representing Michigan at the upcoming Raytheon Technologies Invention Convention US Nationals.</span>
                             </div>
                         </div>
@@ -161,12 +194,12 @@
     <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="img/back.png">
         <div class="container py-5">
             <div class="row g-5">
-                <?php $squery=mysqli_query($conn,"SELECT * from tbl_user where user_type='student'");
-                      $jquery=mysqli_query($conn,"SELECT * from tbl_user where user_type='Judge'");
-                      $mquery=mysqli_query($conn,"SELECT * from tbl_user where user_type='Mentor'");
-                      $tquery=mysqli_query($conn,"SELECT * from tbl_team ");
-                         
-                         $row=mysqli_num_rows($squery);?>
+                <?php $squery = mysqli_query($conn, "SELECT * from tbl_user where user_type='student'");
+                $jquery = mysqli_query($conn, "SELECT * from tbl_user where user_type='Judge'");
+                $mquery = mysqli_query($conn, "SELECT * from tbl_user where user_type='Mentor'");
+                $tquery = mysqli_query($conn, "SELECT * from tbl_team ");
+
+                $row = mysqli_num_rows($squery); ?>
                 <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
                     <h1 class="display-4 text-white" data-toggle="counter-up"><?php echo $row; ?></h1>
                     <span class="fs-5 fw-semi-bold text-light">Our Students</span>
@@ -189,7 +222,7 @@
     <!-- Facts End -->
 
 
-   
+
 
 
     <!-- Service Start -->
@@ -198,16 +231,17 @@
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <p class="fs-5 fw-bold text-primary">Our Event</p>
                 <h1 class="display-5 mb-5">Event We Have Done</h1>
+                <h1 class="display-5 mb-5">Past Events</h1>
             </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="owl-carousel event-carousel row g-4 mb-5  "  >
+                <div class=" event-item wow fadeInUp" data-wow-delay="0.1s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
                             <img class="img-fluid" src="img/service-1.jpg" alt="">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="img/icon/icon-3.png" alt="Icon">
+                                <img class="img-fluid icon-img" src="img/icon/icon-3.png" alt="Icon">
                             </div>
                             <h4 class="mb-3">Landscaping</h4>
                             <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
@@ -215,14 +249,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class=" event-item wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
                             <img class="img-fluid" src="img/service-2.jpg" alt="">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="img/icon/icon-6.png" alt="Icon">
+                                <img class="img-fluid icon-img" src="img/icon/icon-6.png" alt="Icon">
                             </div>
                             <h4 class="mb-3">Pruning plants</h4>
                             <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
@@ -230,14 +264,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class=" event-item wow fadeInUp" data-wow-delay="0.5s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
                             <img class="img-fluid" src="img/service-3.jpg" alt="">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="img/icon/icon-5.png" alt="Icon">
+                                <img class="img-fluid icon-img" src="img/icon/icon-5.png" alt="Icon">
                             </div>
                             <h4 class="mb-3">Irrigation & Drainage</h4>
                             <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
@@ -245,51 +279,89 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class=" event-item wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="img/service-4.jpg" alt="">
+                            <img class="img-fluid" src="img/service-2.jpg" alt="">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="img/icon/icon-4.png" alt="Icon">
+                                <img class="img-fluid icon-img" src="img/icon/icon-6.png" alt="Icon">
                             </div>
-                            <h4 class="mb-3">Garden Maintenance </h4>
+                            <h4 class="mb-3">Pruning plants</h4>
                             <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
                             <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class=" event-item wow fadeInUp" data-wow-delay="0.5s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="img/service-5.jpg" alt="">
+                            <img class="img-fluid" src="img/service-3.jpg" alt="">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="img/icon/icon-8.png" alt="Icon">
+                                <img class="img-fluid icon-img" src="img/icon/icon-5.png" alt="Icon">
                             </div>
-                            <h4 class="mb-3">Green Technology</h4>
+                            <h4 class="mb-3">Irrigation & Drainage</h4>
                             <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
                             <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+
+            </div>
+            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+               
+                <h1 class="display-5 mb-5">Current Events</h1>
+            </div>
+            <div class="owl-carousel event-carousel row g-4 mb-5  "  >
+                <div class=" event-item wow fadeInUp" data-wow-delay="0.1s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="img/service-6.jpg" alt="">
+                            <img class="img-fluid" src="img/event2.jpg" alt="">
                         </div>
-                        <div class="service-text rounded p-5">
+                        <div class="service-text rounded p-4">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="img/icon/icon-2.png" alt="Icon">
+                                <img class="img-fluid icon-img" src="img/icon/icon-3.png" alt="Icon">
                             </div>
-                            <h4 class="mb-3">Urban Gardening</h4>
-                            <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
+                            <h4 class="mb-3">Learn Inventor Habits</h4>
+                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia nostrum quidem assumenda neque libero error, aliquam blanditiis eius pariatur sit rerum consequuntur perspiciatis, voluptate ab dolorum doloribus qui minus enim!</p>
+                            <a class="btn btn-sm" href="img/event2.jpg" target="blank"><i class="fa fa-plus text-primary me-2"></i>Read More</a>
                         </div>
                     </div>
                 </div>
+                <div class=" event-item wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="service-item rounded d-flex h-100">
+                        <div class="service-img rounded">
+                            <img class="img-fluid" src="img/event2.png" alt="">
+                        </div>
+                        <div class="service-text rounded p-5">
+                            <div class="btn-square rounded-circle mx-auto mb-3">
+                                <img class="img-fluid icon-img" src="img/icon/icon-6.png" alt="Icon">
+                            </div>
+                            <h4 class="mb-3">Sustainable Product Design</h4>
+                            <p class="mb-4">A course designed for high school students and freshman. Learn about latest concepts in Business and Engineering.</p>
+                            <a class="btn btn-sm" href="img/event2.png" target="blank"><i class="fa fa-plus text-primary me-2"></i>Read More</a>   </div>
+                    </div>
+                </div>
+                <div class=" event-item wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="service-item rounded d-flex h-100">
+                        <div class="service-img rounded">
+                            <img class="img-fluid" src="img/event3.jpg" alt="">
+                        </div>
+                        <div class="service-text rounded p-5">
+                            <div class="btn-square rounded-circle mx-auto mb-3">
+                                <img class="img-fluid icon-img" src="img/icon/icon-5.png" alt="Icon">
+                            </div>
+                          <h4 class="mb-3">Summer Internship Opportunity</h4>
+                            <p class="mb-4">Do you dabble with traditional crafts or newer technologies(AI,Coding,Robotics or IoT)?</p>
+                              <a class="btn btn-sm" href="img/event3.jpg" target="blank"><i class="fa fa-plus text-primary me-2"></i>Read More</a>    </div>
+                    </div>
+                </div>
+               
+                
+
             </div>
         </div>
     </div>
@@ -300,7 +372,7 @@
 
 
     <!-- Projects Start -->
-    <div class="container-xxl py-5">
+    <!-- <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <p class="fs-5 fw-bold text-primary">Our Projects</p>
@@ -390,7 +462,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Projects End -->
 
 
@@ -401,13 +473,16 @@
                 <p class="fs-5 fw-bold text-primary">Our Team</p>
                 <h1 class="display-5 mb-5">Dedicated & Experienced Team Members</h1>
             </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+            
+            <div class="owl-carousel mentor-carousel row g-4">
+                
+                
+                <div class="owl-item  wow fadeInUp" data-wow-delay="0.1s">
                     <div class="team-item rounded">
-                        <img class="img-fluid" src="img/team-1.jpg" alt="">
+                        <img class="img-fluid" src="img/mentor1.jpg" alt="">
                         <div class="team-text">
-                            <h4 class="mb-0">Doris Jordan</h4>
-                            <p class="text-primary">Landscape Designer</p>
+                            <h4 class="mb-0">Colleen Strover</h4>
+                            <p class="text-primary">Student BS(Product Design Engineering)</p>
                             <div class="team-social d-flex">
                                 <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
                                 <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
@@ -416,12 +491,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="owl-item  wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item rounded">
-                        <img class="img-fluid" src="img/team-2.jpg" alt="">
+                        <img class="img-fluid" src="img/mentor2.jpg" alt="">
                         <div class="team-text">
-                            <h4 class="mb-0">Johnny Ramirez</h4>
-                            <p class="text-primary">Garden Designer</p>
+                        <h4 class="mb-0">Rami Mustafa</h4>
+                            <p class="text-primary">BS (Electrical Engineering)</p>
                             <div class="team-social d-flex">
                                 <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
                                 <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
@@ -430,12 +505,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="owl-item   wow fadeInUp" data-wow-delay="0.5s">
                     <div class="team-item rounded">
-                        <img class="img-fluid" src="img/team-3.jpg" alt="">
+                        <img class="img-fluid" src="img/Mentor4.png" alt="">
                         <div class="team-text">
-                            <h4 class="mb-0">Diana Wagner</h4>
-                            <p class="text-primary">Senior Gardener</p>
+                        <h4 class="mb-0">Jozilla Scott</h4>
+                            <p class="text-primary">BS (Electrical Engineering)</p>
                             <div class="team-social d-flex">
                                 <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
                                 <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
@@ -444,50 +519,64 @@
                         </div>
                     </div>
                 </div>
+                <div class="owl-item  wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="team-item rounded">
+                        <img class="img-fluid" src="img/mentor3.jpg" alt="">
+                        <div class="team-text">
+                            <h4 class="mb-0">Tariq Nitham Othman </h4>
+                            <p class="text-primary">BS (Electrical Engineering)</p>
+                            <div class="team-social d-flex">
+                                <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square rounded-circle me-2" href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
+           
         </div>
     </div>
     <!-- Team End -->
 
     <div class="container-xxl py-5">
-    <div class="container">
-        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-            <p class="fs-5 fw-bold text-primary">Our Partners</p>
-            <h1 class="display-5 mb-5">Partners That Are Sponsoring Us</h1>
-        </div>
-         <!-- Vendor Start -->
-    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container py-5 mb-5">
-            <div class="bg-white">
-                <div class="owl-carousel vendor-carousel">
-                    <img src="img/vendor-1.jpg" alt="">
-                    <img src="img/vendor-2.jpg" alt="">
-                    <img src="img/vendor-3.jpg" alt="">
-                    <img src="img/vendor-4.jpg" alt="">
-                    <img src="img/vendor-5.jpg" alt="">
-                    <img src="img/vendor-6.jpg" alt="">
-                    <img src="img/vendor-7.jpg" alt="">
-                    <img src="img/vendor-8.jpg" alt="">
-                    <img src="img/vendor-9.jpg" alt="">
+        <div class="container">
+            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <p class="fs-5 fw-bold text-primary">Our Partners</p>
+                <h1 class="display-5 mb-5">Partners That Are Sponsoring Us</h1>
+            </div>
+            <!-- Vendor Start -->
+            <div class="container-fluid py-2 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="container py-2 mb-2">
+                    <div class="bg-white">
+                        <div class="owl-carousel vendor-carousel">
+                            <img src="img/SPARK.png" alt="">
+                            <img src="img/fcc.png" alt="">
+                            <img src="img/EMUBF.png" alt="">
+                            <img src="img/MSTEM.png" alt="">
+                            <img src="img/toyota.png" alt="">
+                            <img src="img/fcc.png" alt="">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
+            <!-- Vendor End -->
         </div>
     </div>
-    <!-- Vendor End -->
-    </div>
-    </div>
 
-<?php 
+    <?php
 
-include 'footer.php';
-?>
+    include 'footer.php';
+    ?>
 
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
 
 
-  
+
 </body>
 
 </html>

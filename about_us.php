@@ -78,11 +78,11 @@
                           
                             <div  class="owl-carousel  carousel1">
 
-
-                              <figure><img src="img/service-1.jpg" alt=""></figure>  
-                               <figure><img src="img/service-2.jpg" alt=""></figure> 
-                               <figure><img src="img/service-3.jpg" alt=""></figure> 
-                               <figure><img src="img/service-4.jpg" alt=""></figure> 
+                            <img src="img/IMG_0744.JPG" alt="" > 
+                            <img src="img/IMG_0724.JPG" alt="" > 
+                               <img src="img/IMG_0505.JPG" alt=""> 
+                               <img src="img/IMG_0493.JPG" alt=""> 
+                              
                               </div>
                         </div> 
                       </div>
@@ -112,14 +112,13 @@
                         <div class="col-lg-5 wow fadeInUp " data-wow-delay="0.8s">
                           
                             <div  class="owl-carousel  carousel1">
+                            <img src="img/IMG_0561.JPG" alt="" > 
+                            <img src="img/IMG_0545.JPG" alt="" > 
+                               <img src="img/IMG_0550.JPG" alt=""> 
+                               <img src="img/IMG_0558.JPG" alt=""> 
 
-
-                              <figure><img src="img/service-1.jpg" alt=""></figure>  
-                               <figure><img src="img/service-2.jpg" alt=""></figure> 
-                               <figure><img src="img/service-3.jpg" alt=""></figure> 
-                               <figure><img src="img/service-4.jpg" alt=""></figure> 
                               </div>
-                        </div> 
+                        </div>      
                       </div>
         </div>
     </div>
@@ -131,7 +130,7 @@
             </div>
 
                    
-                      <div class="row py-md-5 " >
+                      <div class="row py-md-5 d-flex justify-content-between " >
                        
                         <div class="col-lg-6   wow fadeInLeft mb-3 mb-lg-0" data-wow-delay="0.1s" >
                           
@@ -147,10 +146,10 @@
                             <div  class="owl-carousel  carousel1">
 
 
-                              <figure><img src="img/service-1.jpg" alt=""></figure>  
-                               <figure><img src="img/service-2.jpg" alt=""></figure> 
-                               <figure><img src="img/service-3.jpg" alt=""></figure> 
-                               <figure><img src="img/service-4.jpg" alt=""></figure> 
+                              <img src="img/IMG_0676.JPG" alt=""> 
+                               <img src="img/IMG_0766.JPG" alt=""> 
+                               <img src="img/IMG_0634.JPG" alt=""> 
+                               <img src="img/Suhani2023.JPG" alt=""> 
                               </div>
                         </div> 
                       </div>

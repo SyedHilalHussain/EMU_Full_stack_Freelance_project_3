@@ -1,4 +1,5 @@
-<?php 
+<?php
+include '../mentor.auth.php'; 
 session_start();
 include '../superadmin/config.php';
 if(isset($_SESSION['id'])){

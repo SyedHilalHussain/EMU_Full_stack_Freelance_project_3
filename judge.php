@@ -85,10 +85,10 @@
                             <div  class="owl-carousel  carousel1">
 
 
-                                <figure><img src="img/service-1.jpg" alt=""></figure>  
-                                 <figure><img src="img/service-2.jpg" alt=""></figure> 
-                                 <figure><img src="img/service-3.jpg" alt=""></figure> 
-                                 <figure><img src="img/service-4.jpg" alt=""></figure> 
+                            <figure><img src="img/IMG_0634.JPG" alt=""></figure>  
+                                 <figure><img src="img/IMG_0627.JPG" alt=""></figure> 
+                                 <figure><img src="img/Judge.JPG" alt=""></figure> 
+                                 <figure><img src="img/IMG_0646.JPG" alt=""></figure>
                                 </div>
               
               
@@ -126,10 +126,10 @@
                             <div  class="owl-carousel  carousel1">
 
 
-                                <figure><img src="img/service-1.jpg" alt=""></figure>  
-                                 <figure><img src="img/service-2.jpg" alt=""></figure> 
-                                 <figure><img src="img/service-3.jpg" alt=""></figure> 
-                                 <figure><img src="img/service-4.jpg" alt=""></figure> 
+                            <img src="img/IMG_0744.JPG" alt="" > 
+                            <img src="img/IMG_0646.JPG" alt="" > 
+                               <img src="img/IMG_0627.JPG" alt=""> 
+                               <img src="img/IMG_0493.JPG" alt="">  
                                 </div>
               
               
@@ -168,10 +168,10 @@
                             <div  class="owl-carousel  carousel1">
 
 
-                                <figure><img src="img/service-1.jpg" alt=""></figure>  
-                                 <figure><img src="img/service-2.jpg" alt=""></figure> 
-                                 <figure><img src="img/service-3.jpg" alt=""></figure> 
-                                 <figure><img src="img/service-4.jpg" alt=""></figure> 
+                            <img src="img/IMG_0676.JPG" alt=""> 
+                               <img src="img/IMG_0766.JPG" alt=""> 
+                               <img src="img/IMG_0634.JPG" alt=""> 
+                               <img src="img/Suhani2023.JPG" alt=""> 
                                 </div>
               
               
